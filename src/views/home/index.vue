@@ -2,12 +2,16 @@
 <template>
   <div class="index-container">
     <div class="warpper">
-      <h1 class="demo-home__title"><img src="https://www.sunniejs.cn/static/weapp/logo.png" /><span> VUE H5开发模板</span></h1>
+      <h1 class="demo-home__title"><img src="~@/assets/logo.png" /><span> VUE H5开发模板</span></h1>
+      <div class="demo-home__title2" style="width: 200px;height:200px;"><span> 别名</span></div>
+
       <h2 class="demo-home__desc">
         A vue h5 template with Vant UI
       </h2>
     </div>
+    <button @click="toPath('/about')">toPath</button>
     <van-cell icon="success" v-for="item in list" :key="item" :title="item" />
+    <button @click="add">添加</button>
   </div>
 </template>
 
@@ -36,12 +40,25 @@ export default {
       ]
     }
   },
-
-  computed: {},
-
+  activated() {
+    console.log('activeed')
+    const routePath = this.$route.path
+    const scrollY = this.routePathScrollSave[routePath] ?? 0
+    console.log(scrollY)
+    document.documentElement.scrollTop = scrollY //
+    document.body.scrollTop = scrollY // document.body.scrollTop 兼容苹果滚动
+  },
   mounted() { },
 
-  methods: {}
+  methods: {
+    add() {
+      setTimeout(() => {
+        for (let i = 0; i < 20; i++) {
+          this.list.push('temp add list item ' + i)
+        }
+      }, 500)
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -71,5 +88,9 @@ export default {
       font-size: 14px;
     }
   }
+}
+
+.demo-home__title2{
+  background-image: url(~@assets/logo.png);
 }
 </style>

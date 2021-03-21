@@ -9,7 +9,7 @@ export const constantRouterMap = [
     redirect: '/home',
     meta: {
       title: '首页',
-      keepAlive: false
+      keepAlive: true
     },
     children: [
       {
@@ -17,6 +17,12 @@ export const constantRouterMap = [
         name: 'Home',
         component: () => import('@/views/home/index'),
         meta: { title: '首页', keepAlive: false }
+      },
+      {
+        path: '/demo',
+        name: 'Demo',
+        component: () => import('@/views/home/demo'),
+        meta: { title: 'Demo', keepAlive: true }
       },
       {
         path: '/about',

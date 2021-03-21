@@ -1,14 +1,29 @@
-# vue-h5-template
+# vue-h5-template 
+
+预定义
+-------------------------------------
+别名统一@开头
+静态资源尽量带上别名符号访问 如~@,~assets 避免不必要混乱
+
+-------------------------------------
+
+对 https://github.com/sunniejs/vue-h5-template.git 根据自身业务进行了调整
+
+调整内容:
+-------------------------------------
+
+默认使用history模式
+
+keep-alive 调整，改为通过全局变量自定义控制
+routePathScrollSave 保存y滚动条位置 例如: {'/about':30,'/home':90}
+使用方式：
+
+-------------------------------------
 
 基于 vue-cli4.0 + webpack 4 + vant ui + sass+ rem 适配方案+axios 封装，构建手机端模板脚手架
 
 掘金: [vue-cli4 vant rem 移动端框架方案](https://juejin.im/post/5cfefc73f265da1bba58f9f7)
 
-[查看 demo](https://sunniejs.cn/vue-h5-template/#/) 建议手机端查看
-
-<p>
-  <img src="./static/demo.png" width="320" style="display:inline;">
-</p>
 
 ### Node 版本要求
 
@@ -21,7 +36,7 @@
 
 ```bash
 
-git clone https://github.com/sunniejs/vue-h5-template.git
+git clone https://github.com/coder1379/vue-h5-template
 
 cd vue-h5-template
 
@@ -1128,21 +1143,4 @@ Vscode setting.json 设置
 
 [vue-cli4-config](https://github.com/staven630/vue-cli4-config)  
 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
-
-# 关于我
-
-获取更多技术相关文章，关注公众号”前端女塾“。
-
-回复加群，即可加入”前端仙女群“
-
- <p>
-  <img src="./static/gognzhonghao.jpg" width="256" style="display:inline;">
-</p>
-
-扫描添加下方的微信并备注 Sol 加交流群，交流学习，及时获取代码最新动态。
-
-<p>
-  <img src="./static/me.png" width="256" style="display:inline;">
-</p>
- 
-如果对你有帮助送我一颗小星星（づ￣3￣）づ╭❤～
+[vue-h5-template](https://github.com/sunniejs/vue-h5-template.git) 

@@ -6,7 +6,6 @@
         <div class="logo"></div>
         <div class="demo-home__title">VUE Vant H5开发模板</div>
         <div class="item"></div>
-        <button @click="routerPush({path:'/demo'})">routerPush()</button>
         <div class="wechat">
           <div>cdn 使用示例</div>
           <img :src="this.$cdn+'/images/logo.png'" alt="" />
@@ -16,6 +15,9 @@
           {{ userName }}
           <van-button v-if="userName == ''" type="warning" size="small" @click="doDispatch">快点我~</van-button>
         </div>
+        <button @click="add">添加</button>
+        <van-cell icon="success" v-for="item in list" :key="item" :title="item" />
+
       </div>
     </div>
   </div>
@@ -28,23 +30,50 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
-
+      list: [
+        'Vue-cli4',
+        '配置多环境变量',
+        'VantUI 组件按需加载',
+        'Sass 全局样式',
+        'Webpack 4',
+        'Vuex 状态管理',
+        'Axios 封装及接口管理',
+        'Vue-router',
+        'Webpack 4 vue.config.js 基础配置',
+        '配置 proxy 跨域',
+        '配置 alias 别名',
+        '配置 打包分析',
+        '配置 externals 引入 cdn 资源',
+        '去掉 console.log',
+        'splitChunks 单独打包第三方模块',
+        '添加 IE 兼容',
+        'Eslint+Pettier 统一开发规范'
+      ]
     }
   },
   computed: {
     ...mapGetters(['userName'])
   },
   mounted() {
+    console.log('md')
     this.initData()
   },
   activated() {
     console.log('activeed')
-    const scrollY = this.routePathScrollSave[this.$route.path] ?? 0
+    const routePath = this.$route.path
+    const scrollY = this.routePathScrollSave[routePath] ?? 0
     console.log(scrollY)
     document.documentElement.scrollTop = scrollY //
     document.body.scrollTop = scrollY // document.body.scrollTop 兼容苹果滚动
   },
   methods: {
+    add() {
+      setTimeout(() => {
+        for (let i = 0; i < 20; i++) {
+          this.list.push('temp add list item ' + i)
+        }
+      }, 500)
+    },
     // 请求数据案例
     initData() {
       // 请求接口数据，仅作为展示，需要配置src->config下环境文件
