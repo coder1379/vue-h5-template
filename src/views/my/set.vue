@@ -1,28 +1,24 @@
-<!-- home/about -->
+<!-- 我们 设置 -->
 <template>
-  <div style="width: 100vw;height: 100vh;" class="about">home/About</div>
+  <div>
+    my set 页面
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-
     }
   },
-  computed: {
+  activated() {
   },
   mounted() {
-  },
-  activated() {
   },
   methods: {
   }
 }
 </script>
 <style lang="scss" scoped>
-  .about{
-    @include flexbox(center)
-  }
 
 </style>

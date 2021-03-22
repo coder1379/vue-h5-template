@@ -1,28 +1,26 @@
-<!-- home/about -->
+<!-- 我的 -->
 <template>
-  <div style="width: 100vw;height: 100vh;" class="about">home/About</div>
+  <div>
+    我的
+    <div>
+      <van-button @click="gotoPath('/my/set')">进入我的设置</van-button>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-
     }
   },
-  computed: {
+  activated() {
   },
   mounted() {
-  },
-  activated() {
   },
   methods: {
   }
 }
 </script>
 <style lang="scss" scoped>
-  .about{
-    @include flexbox(center)
-  }
-
 </style>

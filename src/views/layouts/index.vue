@@ -1,13 +1,14 @@
 <template>
   <div class="app-container">
     <div class="layout-content">
-      <!--<keep-alive v-if="$route.meta.keepAlive">
+      <div>layout:{{$route.meta}}</div>
+      <div v-if="$route.meta.keepAlive" style="background-color: red;width: 100%;height: 20px;">
+        keeplive={{$route.meta.keepAlive}}
+      </div>
+      <keep-alive v-if="true">
         <router-view></router-view>
       </keep-alive>
-      <router-view v-else></router-view>-->
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+      <router-view v-else></router-view>
     </div>
     <div class="layout-footer">
       <TabBar :data="tabbars" @change="handleChange" />
@@ -30,16 +31,17 @@ export default {
           icon: 'home-o'
         },
         {
-          title: 'Demo',
+          title: 'DevDemo',
           to: {
-            name: 'Demo'
+            name: 'DevDemo'
           },
-          icon: 'user-o'
+          icon: 'label-o',
+          badge: '9'
         },
         {
-          title: '关于我',
+          title: '我的',
           to: {
-            name: 'About'
+            name: 'My'
           },
           icon: 'user-o'
         }
@@ -51,8 +53,8 @@ export default {
   },
   methods: {
     handleChange(v) {
-      console.log('tab value:', v)
-      this.setRoutePathScrollPosition()
+      console.log('tab change value:', v)
+      this.setScrollPosition()
     }
   }
 }

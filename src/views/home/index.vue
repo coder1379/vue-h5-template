@@ -5,13 +5,14 @@
       <h1 class="demo-home__title"><img src="~@/assets/logo.png" /><span> VUE H5开发模板</span></h1>
       <div class="demo-home__title2" style="width: 200px;height:200px;"><span> 别名</span></div>
 
+
       <h2 class="demo-home__desc">
         A vue h5 template with Vant UI
       </h2>
     </div>
-    <button @click="toPath('/about')">toPath</button>
+    <button @click="gotoPath('/my/set')">open my set</button>
+    <button @click="gotoPath('/about')">toPath</button>
     <van-cell icon="success" v-for="item in list" :key="item" :title="item" />
-    <button @click="add">添加</button>
   </div>
 </template>
 
@@ -42,11 +43,7 @@ export default {
   },
   activated() {
     console.log('activeed')
-    const routePath = this.$route.path
-    const scrollY = this.routePathScrollSave[routePath] ?? 0
-    console.log(scrollY)
-    document.documentElement.scrollTop = scrollY //
-    document.body.scrollTop = scrollY // document.body.scrollTop 兼容苹果滚动
+    this.gotoScrollPosition()
   },
   mounted() { },
 

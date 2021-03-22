@@ -5,6 +5,20 @@
 别名统一@开头
 静态资源尽量带上别名符号访问 如~@,~assets 避免不必要混乱
 
+设计尺寸：375，在非style内联样式中可直接用px编写代码，将自动按照375比例转换为rem
+
+layout 使用：layout模板存放 layouts
+src/router/router.config.js 添加
+
+统一样式处理
+公共样式 src/assets/css/index.scss 全局样式统一目录 需要局部覆盖在页面 <style lang="scss" scoped> 中单独处理
+ 
+混入样式 src/assets/css/mixin.scss 包含了常用的复杂语法 可通过@include 快速引用
+
+全局css变量 src/assets/css/variables.scss 统一变量目录 公共css属性值例如主题颜色字体距离等均写入此目录 在其他css中进行引入 便于后续统一维护整体样式
+
+vant全局样式覆盖 src/assets/css/vant-overwrite.scss vant组件大部分都可以自定义相关内容不建议进行全局vant样式覆盖 需要完全自定义vant主题可以使用less覆盖见 vant文档
+
 -------------------------------------
 
 对 https://github.com/sunniejs/vue-h5-template.git 根据自身业务进行了调整
@@ -15,8 +29,15 @@
 默认使用history模式
 
 keep-alive 调整，改为通过全局变量自定义控制
-routePathScrollSave 保存y滚动条位置 例如: {'/about':30,'/home':90}
+scrollPositionList 保存y滚动条位置 例如: {'/about':30,'/home':90}
 使用方式：
+在需要缓存的页面跳转页面前调用 this.setScrollPosition()
+在被缓存页面activated生命周期函数中调用 this.gotoScrollPosition()
+
+快捷跳转页面 gotoPath('/path?id=123')
+
+快捷路由push routerPush({ name: 'A-b', params: { id: 123, name: 'name' })
+
 
 -------------------------------------
 
