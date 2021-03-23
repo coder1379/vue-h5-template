@@ -25,7 +25,6 @@ vant全局样式覆盖 src/assets/css/vant-overwrite.scss vant组件大部分都
 
 调整内容:
 -------------------------------------
-
 默认使用history模式
 
 加入路由守卫动态设置 title 并加入项目名
@@ -47,6 +46,60 @@ if (from.meta.keepAlive === true) {
 
 
 -------------------------------------
+
+
+
+环境安装流程
+-----------------------------------------------------------
+win 10 nodejs 安装流程 vue项目搭建过程
+
+win10下安装node和npm
+第一步:官网 https://nodejs.org/zh-cn/download/ 下载免安装的压缩包 选择 Windows 二级制文件(.zip) 64位版本
+
+第二步:解压下载的压缩文件例如：node-v14.15.4-win-x64.zip（注意不要解压在中文路径下或者C盘Windows、Program Files等需要管理员权限的目录下）,解压完整后在解压出的目录（例如node-v14.15.4-win-x64）中创建两个文件node-cache,node-global用来指定npm的模块路径和缓存路径(类似于java的maven库)
+
+第三步:配置环境变量.在环境变量->系统变量下新建一个变量，变量名为NODE_HOME ,变量值为node-v14.15.4-win-x64所有目录的绝对路面。
+添加如下%NODE_HOME%,%NODE_HOME%\node-global两个环境变量到path ,点击系统路径里的Path,点击新建：输入:%NODE_HOME% 添加后在新建输入:%NODE_HOME%\node-global
+注意添加完环境变量后关闭IDE编辑器或命令或重启电脑
+
+第四步:打开cmd,配置刚才新建的两个文件夹
+npm config set prefix "D:\Program Files (x86)\nodejs\node-v12.10.0-win-x64\node-global"
+npm config set cache "D:\Program Files (x86)\nodejs\node-v12.10.0-win-x64\node-cache"
+注意这里的文件夹为自己的安装目录
+
+查看安装的node和npm
+cmd下输入 node --version 
+cmd下输入 npm --version
+
+第五步安装 yarn ，由于国内npm经常安装缓慢可用考虑用yarn代替
+
+cmd 下 输入 npm install -g yarn
+
+安装完成后即可到该项目目录下运行：
+npm install 如果此命令安装没有反应可用执行 yarn install
+
+npm yarn均无法安装改用淘宝镜像执行如下命令。
+设置淘宝为国内镜像源(相当于maven设置阿里是国内的远程镜像仓库)
+打开cmd输入
+npm config set registry https://registry.npm.taobao.org
+设置完了输入
+npm config get registry查看设置的国内镜像对不对
+
+安装淘宝镜像后重新执行 npm install 或 yarn install 任然无法安装完成则改为使用cnpm 由于cnpm安装的目录有时存在未知问题一般最后采用
+
+安装淘宝镜像后npm用cnpm代替，其它命令不变
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+执行 cnpm install 完整安装
+
+- 通过 `npm run serve` 启动本地 , 执行 `development`
+- 通过 `npm run stage` 打包测试 , 执行 `staging`
+- 通过 `npm run build` 打包正式 , 执行 `production`
+
+执行 npm run serve 将自动打开测试网页
+
+----------------------------------------------------
+
 
 基于 vue-cli4.0 + webpack 4 + vant ui + sass+ rem 适配方案+axios 封装，构建手机端模板脚手架
 
