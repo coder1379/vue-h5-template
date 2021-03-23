@@ -1,17 +1,12 @@
 <!-- home -->
 <template>
   <div class="index-container">
-    <div class="warpper">
-      <h1 class="demo-home__title"><img src="~@/assets/logo.png" /><span> VUE H5开发模板</span></h1>
-      <div class="demo-home__title2" style="width: 200px;height:200px;"><span> 别名</span></div>
-
-
-      <h2 class="demo-home__desc">
-        A vue h5 template with Vant UI
-      </h2>
+    <div class="header">
+      <h1><span> VUE H5 VANT 模板</span></h1>
+      <h6><span> 开箱即可进行开发</span></h6>
+      <div @click="add">点击添加list</div>
     </div>
-    <button @click="gotoPath('/my/set')">open my set</button>
-    <button @click="gotoPath('/about')">toPath</button>
+
     <van-cell icon="success" v-for="item in list" :key="item" :title="item" />
   </div>
 </template>
@@ -42,8 +37,9 @@ export default {
     }
   },
   activated() {
-    console.log('activeed')
-    this.gotoScrollPosition()
+    if (this.$route.meta.keepAlive === true) {
+      this.gotoScrollPosition() // 如果为需要缓存调整滚动条位置
+    }
   },
   mounted() { },
 
@@ -51,7 +47,7 @@ export default {
     add() {
       setTimeout(() => {
         for (let i = 0; i < 20; i++) {
-          this.list.push('temp add list item ' + i)
+          this.list.push('item ' + i)
         }
       }, 500)
     }
@@ -79,15 +75,11 @@ export default {
         font-weight: 500;
       }
     }
-    .demo-home__desc {
-      margin: 0 0 20px;
-      color: rgba(69, 90, 100, 0.6);
-      font-size: 14px;
-    }
   }
-}
-
-.demo-home__title2{
-  background-image: url(~@assets/logo.png);
+  .header{
+    text-align: center;
+    padding-top:30px;
+    padding-bottom: 30px;
+  }
 }
 </style>

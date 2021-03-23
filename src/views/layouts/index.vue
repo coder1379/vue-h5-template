@@ -1,14 +1,13 @@
 <template>
   <div class="app-container">
-    <div class="layout-content">
-      <div>layout:{{$route.meta}}</div>
-      <div v-if="$route.meta.keepAlive" style="background-color: red;width: 100%;height: 20px;">
-        keeplive={{$route.meta.keepAlive}}
+    <div class="home-layout-content">
+      <div v-if="$route.meta.keepAlive" style="background-color: gray;height: 20px;color:#ffffff;padding:5px;">
+        keeplive={{$route.meta.keepAlive}} 需要缓存的页面 layouts/index
       </div>
-      <keep-alive v-if="true">
-        <router-view></router-view>
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive"/>
       </keep-alive>
-      <router-view v-else></router-view>
+      <router-view v-if="!$route.meta.keepAlive"/>
     </div>
     <div class="layout-footer">
       <TabBar :data="tabbars" @change="handleChange" />
@@ -54,7 +53,6 @@ export default {
   methods: {
     handleChange(v) {
       console.log('tab change value:', v)
-      this.setScrollPosition()
     }
   }
 }

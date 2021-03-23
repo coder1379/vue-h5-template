@@ -1,11 +1,14 @@
 import api from './index'
 // axios
+import Qs from 'qs'
 import request from '@/utils/request'
+
+// 用户相关接口模块
 
 // 登录
 export function login(data) {
   return request({
-    url: api.Login,
+    url: api.userLogin,
     method: 'post',
     data
   })
@@ -14,19 +17,21 @@ export function login(data) {
 // 用户信息 post 方法
 export function getUserInfo(data) {
   return request({
-    url: api.UserInfo,
+    url: api.userUserInfo,
     method: 'post',
     data,
     hideloading: true
   })
 }
 
-// 用户名称 get 方法
-export function getUserName(params) {
+// 直接拼接url调用接口
+export function callApiByUrl(url, requestJson, method = 'post') {
   return request({
-    url: api.UserName,
-    method: 'get',
-    params,
-    hideloading: true
+    url: url,
+    method: method,
+    data: requestJson,
+    hideloading: true,
+    contentType: 'json'
   })
 }
+

@@ -5,12 +5,15 @@ import 'regenerator-runtime/runtime'
 
 import Vue from 'vue'
 import App from './App.vue'
+
 import router from './router'
 import store from './store'
 
 // 设置 js中可以访问 $cdn
-import { $cdn } from '@/config'
+import { $cdn, title } from '@/config'
 Vue.prototype.$cdn = $cdn
+// 设置js中直接使用配置的项目title 目前用于路由守卫动态设置title
+Vue.prototype.$title = title
 
 // 缓存页面及页面滚动条 封装 start
 Vue.prototype.scrollPositionList = {} // 全局路由滚动条位置保存
@@ -49,11 +52,33 @@ Vue.prototype.gotoScrollPosition = function(positionY = null) {
 }
 // 缓存页面及页面滚动条 封装 end
 
+// 返回上一页 方便调用
+Vue.prototype.gotoBack = function() {
+  window.history.go(-1)
+}
+
 Vue.prototype.gotoPath = function(path) {
   // 快捷跳转路由封装
   this.$router.push({ path: path })
 }
 // 路由快捷跳转封装 end
+
+// 全局路由前置守卫
+router.beforeEach((to, from, next) => {
+  if (from.meta.keepAlive === true) {
+    console.log('被缓存路由:' + from.path)
+    vue.setScrollPosition() // 如果为需要缓存页面则设置当前滚动条位置
+  }
+  next()
+})
+
+// 路由后置守卫 目前主要用于动态设置标题
+router.afterEach((to, from) => {
+  if (to.meta.title) {
+    // 动态设置标题
+    document.title = to.meta.title + '-' + vue.$title
+  }
+})
 
 // 全局引入按需引入UI库 vant
 import '@/plugins/vant'
@@ -67,10 +92,11 @@ import '@/assets/css/vant-overwrite.scss'
 import 'lib-flexible/flexible.js'
 
 // filters
-import './filters'
+import './filters/index'
 Vue.config.productionTip = false
 
-new Vue({
+// vue 变量在全局路由守卫中会进行使用
+const vue = new Vue({
   el: '#app',
   router,
   store,

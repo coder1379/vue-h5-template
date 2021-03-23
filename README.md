@@ -28,13 +28,20 @@ vant全局样式覆盖 src/assets/css/vant-overwrite.scss vant组件大部分都
 
 默认使用history模式
 
-keep-alive 调整，改为通过全局变量自定义控制
-scrollPositionList 保存y滚动条位置 例如: {'/about':30,'/home':90}
-使用方式：
-在需要缓存的页面跳转页面前调用 this.setScrollPosition()
-在被缓存页面activated生命周期函数中调用 this.gotoScrollPosition()
+加入路由守卫动态设置 title 并加入项目名
+
+keep-alive 调整，改为通过全局变量自定义控制滚动条位置,通过router/index.js 
+scrollPositionList 保存y滚动条位置 例如: {'/about':30,'/home':90} 
+路由前置守卫+keepAlive true 控制是否记录滚动条位置 this.setScrollPosition() 也可扩展为手动处理
+
+在需要缓存的页面通过 
+if (from.meta.keepAlive === true) {
+  vue.gotoScrollPosition() // 如果为需要缓存调整滚动条位置
+} 获取之前设置的滚动条位置并跳转到指定位置
 
 快捷跳转页面 gotoPath('/path?id=123')
+
+快捷返回前一页 gotoBack
 
 快捷路由push routerPush({ name: 'A-b', params: { id: 123, name: 'name' })
 

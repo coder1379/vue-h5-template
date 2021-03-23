@@ -21,8 +21,23 @@
         demo7 html 直接使用$cdn资源,scss 嵌套写css
       </div>
 
-      <div>
-        demo8 修改vuex状态
+      <div class="demo-line">
+        userName:{{$store.state.app.userName}}
+      </div>
+      <div class="demo-line">
+        demo8 同步修改vuex状态<van-button @click="changeVuexUserName">修改</van-button>
+      </div>
+      <div class="demo-line">
+        demo9 异步修改vuex状态<van-button @click="asynChangeVuexUserName">修改</van-button>
+      </div>
+      <div class="demo-line">
+        demo10 html直接使用全局filter过滤器 {{mobile|hidePhone}}
+      </div>
+      <div class="demo-line">
+        demo11 html直接使用全局filter过滤器 {{mobile2}}
+      </div>
+      <div @click="gotoPath('/dev-demo/copy-base-list?id=2')" class="demo-line">
+        demo12 点击测试下拉刷新及列表加载
       </div>
     </div>
 
@@ -30,28 +45,49 @@
 </template>
 
 <script>
+// import { mapGetters } from 'vuex' // 可直接结构vuex
 export default {
   data() {
     return {
+      mobile: '13331121121',
+      mobile2: '13111000011',
       list: [
       ]
     }
   },
   activated() {
+    if (this.$route.meta.keepAlive === true) {
+      this.gotoScrollPosition() // 如果为需要缓存调整滚动条位置
+    }
   },
   mounted() {
+    // demo11
+    this.mobile2 = this.$hidePhone(this.mobile2)
   },
-
+  computed: {
+    // ...mapGetters(['userName']) // 可直接结构vuex
+  },
   methods: {
+    changeVuexUserName() {
+      // 同步修改vuex状态 demo8
+      this.$store.commit('SET_USER_NAME', 'newUserName同步' + (new Date().getTime()))
+    },
+    asynChangeVuexUserName() {
+      // 异步修改vuex状态 demo9
+      this.$store.dispatch('setUserName', 'newUserName异步' + (new Date().getTime()))
+    }
   }
 }
 </script>
 <style lang="scss" scoped>
 .demo-container{
   padding: 12px;
+  margin-bottom: 50px;
   .demo-line{
     font-size: 20px;
     padding: 5px;
+    border: 1px dashed gray ;
+    margin: 5px;
   }
 }
 
