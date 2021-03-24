@@ -1,5 +1,67 @@
 # vue-h5-template Vue+Vant 
 
+启动项目
+----------------------------------------------
+`package.json` 里的 `scripts` 配置 `serve` `stage` `build`，通过 `--mode xxx` 来执行不同环境
+
+- 通过 `npm run serve` 启动本地 , 执行 `development`
+- 通过 `npm run stage` 打包测试 , 执行 `staging` 需要测试环境配置nginx重写404到index，避免vue页面刷新404
+- 通过 `npm run build` 打包正式 , 执行 `production` 需要环境配置nginx重写404到index，避免vue页面刷新404
+
+
+Nginx 配置
+----------------------------------------------------
+```
+兼容 nginx配置
+//// 二级域名模式
+   location / {
+      root /root/server/vue/wap/; #项目路径
+      index index.html;                        
+      try_files $uri $uri/ /index.html; #匹配不到任何静态资源，跳到同一个index.html 主要是加入这句
+        // 如果try_files不生效可以尝试改为 
+        //if (!-e $request_filename){
+        //                rewrite ^/(.*) /index.html last;
+        //            }
+    }
+
+nginx 加入不缓存index.html 防止不刷新无法加载最新 需配合下方index.html修改
+location = /index.html {
+    add_header Cache-Control "no-cache, no-store";
+}
+
+
+
+// 二级目录模式
+        location ^~ /abc/ {
+                index index.html;
+      try_files $uri $uri/ /abc/index.html; #匹配不到任何静态资源，跳到同一个index.html 主要是加入这句
+        // 如果try_files不生效可以尝试改为 
+         //   if (!-e $request_filename){
+          //      rewrite ^/(.*) /lcyf-webs/index.html last;
+          //  }
+            autoindex  off;
+        }
+
+nginx 加入不缓存index.html 防止不刷新无法加载最新(二级目录模式) 需配合下方index.html修改
+location = /lcyf-webs/index.html {
+    add_header Cache-Control "no-cache, no-store";
+}
+
+-----
+index.html页面被缓存导致没有刷新处理
+index.html加入
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-control" content="no-cache">
+<meta http-equiv="Cache" content="no-cache">
+
+
+
+```
+
+
+
+
 预定义
 -------------------------------------
 别名统一@开头
@@ -47,7 +109,32 @@ if (from.meta.keepAlive === true) {
 
 -------------------------------------
 
-
+目录结构
+------------------------------------------
+```bash
+├── public 静态文件目录
+│   ├── dist 旧web html文件目录，直接将原html项目代码拷贝即可，注意 需要修改底部我的跳转地址到 /my
+├── src 源码地址
+│   ├── api 接口封装地址
+│   ├── assets 静态资源
+│   ├── components 组件
+│   ├── config 环境配置文件
+│   ├── filters 数据过滤函数封装
+│   ├── plugins 使用的插件配置
+│   ├── router 路由配置
+│   ├── store 状态封装
+│   ├── utils 常用函数封装
+│   ├── views 视图目录
+│   │   ├── apitest 统一测试接口上线后可删除 
+│   │   ├── goods 产品页面目录 - 由于使用了旧产品html 目前该目录未使用
+│   │   ├── home 主页目录 - 由于使用了旧产品html 目前该目录未使用，行后根本可写入此目录
+│   │   ├── layouts 页面模板目录
+│   │   ├── my 我的页面目录
+│   │   ├── myteam 我的团队目录
+│   │   ├── order 订单目录 - 由于使用了旧产品html 目前该目录未使用，行后根本可写入此目录
+├── webroot 测试或生产打包后的跟目录文件，由于旧项目使用的dist为了避免混乱使用了这个名字
+├── vue.config.js 环境配置文件
+```
 
 环境安装流程
 -----------------------------------------------------------

@@ -73,5 +73,12 @@ export const constantRouterMap = [
     name: 'Login',
     component: () => import('@/views/home/login'),
     meta: { title: '登录', keepAlive: false }
+  },
+  {
+    // 404必须保持此文件在最后
+    path: '*',
+    name: '404',
+    component: () => import('@/views/home/404'),
+    meta: { title: '404', keepAlive: false }
   }
 ]
