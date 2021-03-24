@@ -1,4 +1,4 @@
-# vue-h5-template 
+# vue-h5-template Vue+Vant
 
 预定义
 -------------------------------------
