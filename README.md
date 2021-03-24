@@ -1,4 +1,4 @@
-# vue-h5-template Vue+Vant
+# vue-h5-template Vue+Vant 
 
 预定义
 -------------------------------------
@@ -24,7 +24,7 @@ vant全局样式覆盖 src/assets/css/vant-overwrite.scss vant组件大部分都
 对 https://github.com/sunniejs/vue-h5-template.git 根据自身业务进行了调整
 
 调整内容:
--------------------------------------
+---------------------------------------
 默认使用history模式
 
 加入路由守卫动态设置 title 并加入项目名
