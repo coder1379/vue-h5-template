@@ -4,6 +4,7 @@
     <div class="header">
       <h1><span> VUE H5 VANT 模板</span></h1>
       <h6><span> 开箱即可进行开发</span></h6>
+      <h6><span>{{$store.state.app.userName}}</span></h6>
       <div @click="add">点击添加list</div>
     </div>
 
