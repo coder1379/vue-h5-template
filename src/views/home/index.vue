@@ -37,9 +37,13 @@ export default {
     }
   },
   activated() {
+    console.log('activeed')
     if (this.$route.meta.keepAlive === true) {
       this.gotoScrollPosition() // 如果为需要缓存调整滚动条位置
     }
+  },
+  deactivated() {
+    console.log('deactivated')
   },
   mounted() { },
 

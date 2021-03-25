@@ -60,8 +60,6 @@ index.html加入
 ```
 
 
-
-
 预定义
 -------------------------------------
 别名统一@开头
@@ -91,6 +89,7 @@ vant全局样式覆盖 src/assets/css/vant-overwrite.scss vant组件大部分都
 
 加入路由守卫动态设置 title 并加入项目名
 
+注意keep-alive可以结合activated+deactivated 动态控制数据
 keep-alive 调整，改为通过全局变量自定义控制滚动条位置,通过router/index.js 
 scrollPositionList 保存y滚动条位置 例如: {'/about':30,'/home':90} 
 路由前置守卫+keepAlive true 控制是否记录滚动条位置 this.setScrollPosition() 也可扩展为手动处理
@@ -135,6 +134,59 @@ if (from.meta.keepAlive === true) {
 ├── webroot 测试或生产打包后的跟目录文件，由于旧项目使用的dist为了避免混乱使用了这个名字
 ├── vue.config.js 环境配置文件
 ```
+
+缓存页面动态变更方案2 适用于在动态控制缓存页面场景较多的业务 也可尝试同时一起使用 有待测试
+-------------------------------------------------------------------------------
+```需要的设置缓存的页面：
+<keep-alive :include="keepAlivePage">
+          <router-view></router-view>
+</keep-alive>
+
+<script>
+  computed: {
+    ...mapGetters([
+      'keepAlivePage'
+    ])
+  }
+</script>
+
+VUEX state加入数组：
+const state = {
+  keepAlivePage: [] // 需要缓存的页面，如果说你一开始就要缓存，那么你可以在这里设置初始值，如果你不需一开始就设置缓存，那么设置为空，再通过某种条件通过mutations或者actions改变keepAlivePage
+}
+
+getter中加入：
+const getters = {
+  keepAlivePage: state => state.settings.keepAlivePage // 获取需要缓存的页面
+}
+export default getters
+
+动态控制：
+this.$store.dispatch('settings/addKeepAlivePage', 'Home') //'Home'就是你要增加页面缓存的名称。
+
+VUEX actions中加入：
+const actions = {
+  addKeepAlivePage ({ commit }, name) {
+    commit('ADD_KEEP_ALVE', name)
+  }
+}
+
+VUEX mutations中加入：
+const mutations = {
+ ADD_KEEP_ALVE: (state, name) => {
+    state.keepAlivePage = state.keepAlivePage.concat(name)
+  }
+}
+
+注意！！这里要特别注意页面组价的名字要和router设置页面的名字要一一对应，不然的话接下来的需求就会实现不了！！
+
+来源地址
+https://blog.csdn.net/qq_42268364/article/details/102368148
+
+```
+
+
+
 
 环境安装流程
 -----------------------------------------------------------
