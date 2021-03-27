@@ -1,6 +1,6 @@
 <!-- home/about -->
 <template>
-  <div>
+  <div class="page-container">
     <van-nav-bar
       title="404"
       left-text="返回"
@@ -8,7 +8,7 @@
       @click-left="gotoBack"
     >
     </van-nav-bar>
-    <div style="width: 100vw;height: 70vh;" class="about">404 页面没有找到</div>
+    <div class="error-page">404 页面没有找到</div>
   </div>
 </template>
 
@@ -30,7 +30,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .about{
+  .error-page{
+    width: 100vw;
+    height: 70%;
     @include flexbox(center)
   }
 

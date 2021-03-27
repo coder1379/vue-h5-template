@@ -1,6 +1,6 @@
 <!-- home -->
 <template>
-  <div class="index-container">
+  <div class="page-container">
     <div class="header">
       <h1><span> VUE H5 VANT 模板</span></h1>
       <h6><span> 开箱即可进行开发</span></h6>
@@ -60,7 +60,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.index-container {
+.page-container {
   .warpper {
     padding: 12px;
     background: #fff;

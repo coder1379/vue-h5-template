@@ -1,6 +1,6 @@
 <!-- page name -->
 <template>
-  <div class="list">
+  <div class="page-container">
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list
         v-model="loading"
@@ -69,6 +69,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.list{
-}
+
 </style>

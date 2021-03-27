@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <div class="home-layout-content">
+    <div class="layout-content">
       <div v-if="$route.meta.keepAlive" style="background-color: gray;height: 20px;color:#ffffff;padding:5px;">
         keeplive={{$route.meta.keepAlive}} 需要缓存的页面 layouts/index
       </div>

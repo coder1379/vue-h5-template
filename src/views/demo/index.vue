@@ -1,6 +1,6 @@
 <!-- demo -->
 <template>
-  <div class="demo-container">
+  <div class="page-container">
     <div class="warpper">
       <h1><span> VUE H5 VANT 部分DEMO</span></h1>
       <div class="demo1 demo-line">
@@ -10,7 +10,7 @@
 
       <div class="demo3 demo-line"><span>css demo3 使用variabless.scss变量</span></div>
 
-      <van-button class="demo4" type="primary" size="large" @click="gotoPath('/my?id=123')">测试点击跳转路由到我的</van-button>
+      <van-button class="demo4" style="width:80%;" type="primary" size="large" @click="gotoPath('/my?id=123')">测试点击跳转路由到我的</van-button>
 
       <div class="demo5 demo-line"><span>css demo5 使用minin.scss 混入css </span></div>
 
@@ -80,9 +80,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.demo-container{
-  padding: 12px;
-  margin-bottom: 50px;
+.page-container{
   .demo-line{
     font-size: 20px;
     padding: 5px;

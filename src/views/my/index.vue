@@ -1,6 +1,6 @@
 <!-- 我的 -->
 <template>
-  <div>
+  <div class="page-container">
     我的页面
     <div>
       <van-button type="primary" @click="gotoPath('/my/set')">点击进入我的设置</van-button>

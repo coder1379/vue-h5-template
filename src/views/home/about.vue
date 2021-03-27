@@ -1,6 +1,6 @@
 <!-- home/about -->
 <template>
-  <div style="width: 100vw;height: 100vh;" class="about">home/About</div>
+  <div class="page-container">home/About</div>
 </template>
 
 <script>
@@ -21,7 +21,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .about{
+  .page-container{
     @include flexbox(center)
   }
 

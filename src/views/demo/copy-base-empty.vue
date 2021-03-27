@@ -1,6 +1,6 @@
 <!-- page name -->
 <template>
-  <div><!--空页面用于快速复制--></div>
+  <div class="page-container"><!--空页面用于快速复制--></div>
 </template>
 
 <script>
