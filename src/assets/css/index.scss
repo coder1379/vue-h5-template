@@ -6,6 +6,13 @@ body{
   color: $font-color;
   font-family: Arial, Helvetica, 'STHeiti STXihei', 'Microsoft YaHei', Tohoma, sans-serif;
   background-color: $background-color;
+  width: 100%;
+  height: 100%;
+}
+
+#app{
+  width: 100%;
+  height: 100%;
 }
 
 .home-layout-content{
