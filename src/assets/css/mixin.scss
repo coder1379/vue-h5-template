@@ -34,3 +34,13 @@
   flex-wrap: $fw;
   -webkit-flex-wrap: $fw;
 }
+
+// page center 整个页面居中 例如首页
+@mixin pagecenter{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}

@@ -1,7 +1,7 @@
 <!-- home -->
 <template>
   <div class="page-container">
-    <div class="header">
+    <div class="body-container">
       <h1><span> VUE H5 VANT 模板</span></h1>
       <h6><span> 开箱即可进行开发</span></h6>
       <h6><span>{{$store.state.app.userName}}</span></h6>
@@ -81,7 +81,7 @@ export default {
       }
     }
   }
-  .header{
+  .body-container{
     text-align: center;
     padding-top:30px;
     padding-bottom: 30px;

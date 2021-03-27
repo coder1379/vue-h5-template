@@ -14,28 +14,22 @@ body{
   color: $font-color;
   font-family: Arial, Helvetica, 'STHeiti STXihei', 'Microsoft YaHei', Tohoma, sans-serif;
   background-color: $background-color;
-  width: 100%;
-  min-height: 100%;
 }
 
 #app{
   /*vue 最外层div*/
-  width: 100%;
-  min-height: 100%;
 }
 
 .app-container{
-  /*app-layout 外层div*/
-  width: 100%;
-  min-height: 100%;
+  /*app-layout 外层div 使用layout时有效*/
 }
 
 .layout-content{
-  /*layout容器外层div*/
+  /*app-layout 外层div 使用layout时有效 */
 }
 
 .layout-footer{
-  /*layout footer 容器 div*/
+  /*layout footer 容器 div 使用layout时有效*/
 }
 
 .page-container{

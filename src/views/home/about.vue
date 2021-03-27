@@ -22,7 +22,8 @@ export default {
 </script>
 <style lang="scss" scoped>
   .page-container{
-    @include flexbox(center)
+    @include flexbox(center);
+    @include pagecenter;
   }
 
 </style>

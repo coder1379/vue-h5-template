@@ -30,10 +30,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .error-page{
-    width: 100vw;
-    height: 70%;
-    @include flexbox(center)
+  .error-page {
+    @include flexbox(center);
+    @include pagecenter;
   }
 
 </style>
