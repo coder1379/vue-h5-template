@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-container">
     <div v-if="$route.meta.keepAlive" style="background-color: red;height: 20px;color:#ffffff;padding:5px;">
       keepAlive={{$route.meta.keepAlive}} 需要缓存的页面 layouts/footer
     </div>
