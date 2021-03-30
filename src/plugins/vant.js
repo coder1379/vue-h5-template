@@ -1,6 +1,6 @@
 // 按需全局引入 vant组件
 import Vue from 'vue'
-import { Icon, Form, Field, Button, List, Cell, Tabbar, TabbarItem, NavBar, Dialog, Toast, PullRefresh, Empty, Col, Row } from 'vant'
+import { Icon, Form, Field, Button, List, Cell, Tabbar, TabbarItem, NavBar, Dialog, Toast, PullRefresh, Empty, Col, Row, CellGroup, Tag, Overlay, Loading, DropdownMenu, DropdownItem, Collapse, CollapseItem, Popup, Search, Area, Sticky, Picker, countDown } from 'vant'
 Vue.use(Button)
 Vue.use(Form)
 Vue.use(Field)
@@ -15,3 +15,18 @@ Vue.use(PullRefresh)
 Vue.use(Empty)
 Vue.use(Col)
 Vue.use(Row)
+Vue.use(CellGroup)
+Vue.use(Tag)
+Vue.use(Overlay)
+Vue.use(Loading)
+Vue.use(DropdownMenu)
+Vue.use(DropdownItem)
+Vue.use(Collapse)
+Vue.use(CollapseItem)
+Vue.use(Popup)
+Vue.use(Search)
+Vue.use(Area)
+Vue.use(Sticky)
+Vue.use(Picker)
+Vue.use(countDown)
+

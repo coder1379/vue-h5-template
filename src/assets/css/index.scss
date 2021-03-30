@@ -12,12 +12,14 @@ a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, bo
 html,
 body{
   color: $font-color;
-  font-family: Arial, Helvetica, 'STHeiti STXihei', 'Microsoft YaHei', Tohoma, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+  Helvetica, Segoe UI, Arial, Roboto, 'PingFang SC', 'miui', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
   background-color: $background-color;
 }
 
 #app{
   /*vue 最外层div*/
+  font-size: $app-font-size;
 }
 
 .app-container{

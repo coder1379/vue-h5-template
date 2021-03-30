@@ -1,16 +1,27 @@
 <!-- page name -->
 <template>
   <div class="page-container">
-    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        finished-text="没有更多了"
-        @load="onLoad"
-      >
-        <van-cell v-for="item in list" :key="item" :title="item" />
-      </van-list>
-    </van-pull-refresh>
+    <div class="header-container">
+      <van-nav-bar
+        title="列表"
+        left-text="返回"
+        fixed
+        left-arrow
+        @click-left="gotoBack"
+      />
+    </div>
+    <div class="body-container">
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          finished-text="没有更多了"
+          @load="onLoad"
+        >
+          <van-cell v-for="(item,index) in list" :key="index" :title="item" />
+        </van-list>
+      </van-pull-refresh>
+    </div>
   </div>
 </template>
 

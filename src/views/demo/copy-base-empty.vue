@@ -1,6 +1,19 @@
 <!-- page name -->
 <template>
-  <div class="page-container"><!--空页面用于快速复制--></div>
+  <div class="page-container">
+    <div class="header-container">
+      <van-nav-bar
+        title="标题"
+        left-text="返回"
+        fixed
+        left-arrow
+        @click-left="gotoBack"
+      />
+    </div>
+    <div class="body-container">
+      <!--主题内容-->
+    </div>
+  </div>
 </template>
 
 <script>
