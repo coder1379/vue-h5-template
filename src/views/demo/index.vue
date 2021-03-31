@@ -39,6 +39,49 @@
       <div @click="gotoPath('/dev-demo/copy-base-list?id=2')" class="demo-line">
         demo12 点击测试下拉刷新及列表加载
       </div>
+      <div>
+        demo13 动态创建组件
+        <div id="demo13div">
+
+          <van-cell-group :key="item.id" v-for="(item,index) in typeList" title="测试块">
+            <div  v-if="item.type==1">
+              <van-field
+                center
+                :label="item.name"
+                right-icon="arrow"
+                v-model="item.value"
+                readonly
+                @click="$set(item,'showType',true)"
+                input-align="right"
+                placeholder="请选择"
+              />
+
+              <van-popup v-model="item.showType" round position="bottom">
+                <van-picker
+                  show-toolbar
+                  :columns="item.list"
+                  :title = "item.name"
+                  value-key="b"
+                  @cancel="item.showType = false"
+                  @confirm="(picker) => {createSelect(picker, item)}"
+                />
+              </van-popup>
+
+            </div>
+
+            <div v-if="item.type==2" @click="showTest">
+              <van-field
+                center
+                v-model =  "item.value"
+                :label="item.name"
+                :placeholder="'请输入'+item.name"
+              />
+            </div>
+
+          </van-cell-group>
+
+        </div>
+      </div>
     </div>
 
   </div>
@@ -52,7 +95,8 @@ export default {
       mobile: '13331121121',
       mobile2: '13111000011',
       list: [
-      ]
+      ],
+      typeList: [{ id: 1, type: 1, name: '1', list: [{ a: '1', b: '1' }, { a: '2', b: '2' }], value: 'v1' }, { id: 2, type: 2, name: '2', value: 'v2' }, { id: 3, type: 1, name: '3', list: [{ a: '3', b: '3' }, { a: '32', b: '32' }], value: 'v3' }]
     }
   },
   activated() {
@@ -75,6 +119,16 @@ export default {
     asynChangeVuexUserName() {
       // 异步修改vuex状态 demo9
       this.$store.dispatch('setUserName', 'newUserName异步' + (new Date().getTime()))
+    },
+    createSelect(value, item) {
+      // demo13 动态创建组件
+      item.value = value.b
+      console.log(value)
+      console.log(item)
+      item.showType = false
+    },
+    showTest(){
+      console.log(this.typeList)
     }
   }
 }
