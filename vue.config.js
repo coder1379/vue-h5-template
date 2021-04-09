@@ -84,6 +84,23 @@ module.exports = {
     // 为生产环境修改配置...
     // if (IS_PROD) {
     //   // externals
+
+    // npm install uglifyjs-webpack-plugin --save-dev // 自动删除debug，console
+
+    /*    config.plugins.push(
+      new UglifyJsPlugin({
+        uglifyOptions: {
+          compress: {
+            warnings: false,
+            drop_debugger: true,
+            drop_console: true
+          }
+        },
+        sourceMap: false,
+        parallel: true
+      })
+    )*/
+
     //   config.externals = externals
     // }
   },

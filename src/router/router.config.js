@@ -36,7 +36,8 @@ export const constantRouterMap = [
       {
         path: '/my',
         name: 'My',
-        component: () => import('@/views/my/index'),
+        component: (resolve) => require(['@/views/my/index'], resolve), // 懒加载页面示例
+        // component: () => import('@/views/my/index'),
         meta: { title: '我的', keepAlive: false }
       }
     ]
