@@ -67,7 +67,9 @@ Vue.prototype.gotoPath = function(path) {
 router.beforeEach((to, from, next) => {
   if (from.meta.keepAlive === true) {
     console.log('被缓存路由:' + from.path)
-    vue.setScrollPosition() // 如果为需要缓存页面则设置当前滚动条位置
+    if (from.meta.excludeScroll !== true) {
+      vue.setScrollPosition() // 如果为需要缓存页面则设置当前滚动条位置 如果由于html结构问题改为页面中beforeRouteLeave自行处理
+    }
   }
   next()
 })

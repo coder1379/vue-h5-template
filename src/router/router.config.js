@@ -17,7 +17,7 @@ export const constantRouterMap = [
         path: '/home',
         name: 'Home',
         component: () => import('@/views/home/index'),
-        meta: { title: '首页', keepAlive: true }
+        meta: { title: '首页', keepAlive: true, excludeScroll: true }
       },
       {
         // demo 页面 用于开发快速复制和组件使用查看

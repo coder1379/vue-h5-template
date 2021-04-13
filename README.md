@@ -98,6 +98,9 @@ keep-alive 调整，改为通过全局变量自定义控制滚动条位置,通�
 scrollPositionList 保存y滚动条位置 例如: {'/about':30,'/home':90} 
 路由前置守卫+keepAlive true 控制是否记录滚动条位置 this.setScrollPosition() 也可扩展为手动处理
 
+// 如果涉及到部分页面使用了 fixed或者absolute 导致无法在最外层获取到滚动条和设置滚动条的情况需要自行在相关页面进行维护，router.config.js中excludeScroll字段为判断全局滚动设置
+
+
 在需要缓存的页面通过 
 if (from.meta.keepAlive === true) {
   vue.gotoScrollPosition() // 如果为需要缓存调整滚动条位置
