@@ -8,7 +8,7 @@ const mutations = {
   }
 }
 const actions = {
-  // 异步修改 this.$store.dispatch('setUserName','name')
+  // 异步修改 this.$store.dispatch('setUserName','name'),不使用异步修改可以不用添加
   setUserName({ commit }, name) {
     commit('SET_USER_NAME', name)
   }
