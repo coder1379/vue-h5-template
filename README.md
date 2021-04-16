@@ -114,6 +114,7 @@ if (from.meta.keepAlive === true) {
 
 快捷路由push routerPush({ name: 'A-b', params: { id: 123, name: 'name' })
 
+request 加入timeout可以动态设置超时时间，，根据需要维护,和 hideloading同级
 
 -------------------------------------
 
@@ -778,7 +779,7 @@ import { baseApi } from '@/config'
 // create an axios instance
 const service = axios.create({
   baseURL: baseApi, // url = base api url + request url
-  withCredentials: true, // send cookies when cross-domain requests
+  withCredentials: false, // send cookies when cross-domain requests 这里和nginx * 有冲突，测试环境改为false ，生产环境考虑true
   timeout: 5000 // request timeout
 })
 

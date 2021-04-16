@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { callApiByUrl } from '@/api/home.js'
 export default {
   data() {
     return {
@@ -54,13 +55,16 @@ export default {
   },*/
   methods: {
     onLoad() {
-      setTimeout(() => {
+      // 主要替换接口调用及接口内 数组处理部分，其余相关参数可以不用调整
+      callApiByUrl('/getcurrent1p.php', {}, 'GET').then((res) => {
+        // 添加列表数据
         // 判断是否为刷新情况当前内容
         if (this.refreshing) {
           this.list = []
           this.refreshing = false
         }
 
+        // 数据处理
         for (let i = 0; i < 10; i++) {
           this.list.push(this.list.length + 1)
         }
@@ -68,14 +72,20 @@ export default {
         // 设置加载完成
         this.loading = false
 
-        // 判断是否还有下一页
+        // 判断是否还有下一页处理
         if (this.list.length >= 40) {
           this.finished = true
         }
-      }, 2000)
+      }).catch((err) => {
+        this.showException(err)
+        this.loading = false
+        this.refreshing = false
+        this.finished = true
+      })
     },
     onRefresh() {
       // 清空列表数据
+      this.list = [] // 情况数据
       this.finished = false
 
       // 重新加载数据

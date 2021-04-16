@@ -6,8 +6,8 @@ import { baseApi } from '@/config'
 // create an axios instance
 const service = axios.create({
   baseURL: baseApi, // url = base api url + request url
-  withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  withCredentials: false, // send cookies when cross-domain requests 这里默认为false，生产需要可改为true 这里在测试时会由于一些设置导致接口调用失败，所有默认为false
+  timeout: 10000 // request timeout 默认10秒超时
 })
 
 // request拦截器 request interceptor
@@ -20,8 +20,9 @@ service.interceptors.request.use(
         forbidClick: true
       })
     }
+
     if (store.getters.token) {
-      config.headers['X-Token'] = ''
+      // config.headers['X-Token'] = '' // 设置token参数
     }
     return config
   },

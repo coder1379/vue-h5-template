@@ -24,14 +24,3 @@ export function getUserInfo(data) {
   })
 }
 
-// 直接拼接url调用接口
-export function callApiByUrl(url, requestJson, method = 'post') {
-  return request({
-    url: url,
-    method: method,
-    data: requestJson,
-    hideloading: true,
-    contentType: 'json'
-  })
-}
-

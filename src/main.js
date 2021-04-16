@@ -63,6 +63,15 @@ Vue.prototype.gotoPath = function(path) {
 }
 // 路由快捷跳转封装 end
 
+// 全局统一异常处理，个性化自行在指定页面重写
+Vue.prototype.showException = function(err) {
+  if (typeof (err) === 'string') {
+    this.$toast(err)
+  } else {
+    this.$toast(err.message)
+  }
+}
+
 // 全局路由前置守卫
 router.beforeEach((to, from, next) => {
   if (from.meta.keepAlive === true) {
