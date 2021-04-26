@@ -31,6 +31,8 @@ export default {
   data() {
     return {
       list: [],
+      pageNumber: 0, // 当前页数
+      pageSize: 10, // 每页数量
       loading: false,
       finished: false,
       refreshing: false
@@ -55,8 +57,11 @@ export default {
   },*/
   methods: {
     onLoad() {
+      // 每次调用添加获取页数数量，非分页类可以删除
+      this.pageNumber++
+
       // 主要替换接口调用及接口内 数组处理部分，其余相关参数可以不用调整
-      callApiByUrl('/getcurrent1p.php', {}, 'GET').then((res) => {
+      callApiByUrl('/getcurrent1p.php', { pageNumber: this.pageNumber, pageSize: this.pageSize }, 'GET').then((res) => {
         // 添加列表数据
         // 判断是否为刷新情况当前内容
         if (this.refreshing) {
@@ -86,6 +91,7 @@ export default {
     onRefresh() {
       // 清空列表数据
       this.list = [] // 情况数据
+      this.pageNumber = 0 // 重置分页
       this.finished = false
 
       // 重新加载数据
