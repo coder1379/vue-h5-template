@@ -34,6 +34,13 @@ export const constantRouterMap = [
         meta: { title: 'DemoList', keepAlive: true }
       },
       {
+        // demo-page 全屏活动页
+        path: '/dev-demo/all-page-test',
+        name: 'All-page-test',
+        component: () => import('@/views/demo/all-page-test'),
+        meta: { title: 'all-page-test', keepAlive: false }
+      },
+      {
         path: '/my',
         name: 'My',
         component: (resolve) => require(['@/views/my/index'], resolve), // 懒加载页面示例
