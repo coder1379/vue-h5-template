@@ -45,13 +45,15 @@ export default {
   activated() {
     // 需要缓存的页面手动加入滚动条处理 不缓存可删除 activated
     if (this.$route.meta.keepAlive === true) {
-      this.gotoScrollPosition()
+      this.gotoScrollPosition() // 全局
+      // this.$refs.pageContainerRef.scrollTop = this.scrollPositionList[this.$route.path] // 自定义情况下和全局二选一 注意 pageContainerRef为滚动容器ref
     }
   },
   /* beforeRouteLeave(to, from, next) {
     // 非缓存页面可直接删除beforeRouteLeave
-     if (from.meta.keepAlive === true) { // 由于部分html结构问题导致需要单独处理滚动条位置
-       this.setScrollPosition(null, this.$refs.page - scroll - container.scrollTop)
+    // 由于部分html结构问题导致需要单独处理滚动条位置需在router.config.js 设置excludeScroll 排除全局设置滚的位置 配合pageContainerRef组合自定义使用
+     if (from.meta.keepAlive === true) {
+       this.setScrollPosition(null, this.$refs.pageContainerRef.scrollTop)
     }
     next()
   },*/
