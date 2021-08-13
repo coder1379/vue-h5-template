@@ -46,7 +46,7 @@ export default {
     // 需要缓存的页面手动加入滚动条处理 不缓存可删除 activated
     if (this.$route.meta.keepAlive === true) {
       this.gotoScrollPosition() // 全局
-      // this.$refs.pageContainerRef.scrollTop = this.scrollPositionList[this.$route.path] // 自定义情况下和全局二选一 注意 pageContainerRef为滚动容器ref
+      // this.$refs.pageContainerRef.scrollTop = this.scrollPositionList[this.$route.path] // 自定义情况下和全局二选一 注意 pageContainerRef为滚动容器ref ref='pageContainerRef'
     }
   },
   /* beforeRouteLeave(to, from, next) {
