@@ -117,6 +117,26 @@ activated() {
        }
        next()
      },
+     
+     ///对于部分页面需要动态控制是否应该刷新采用 
+     this.getRefreshStaticPage,this.setRefreshStaticPage
+     
+     例如:
+       activated() {
+         // 根据全局变量控制是否刷新页面
+         if (this.getRefreshStaticPage()) {
+           this.setRefreshStaticPage()
+           this.loadData()
+         }
+       },
+       mounted() {
+         // 当非刷新的适合调用看，防止重复调用两次
+         if (!this.getRefreshStaticPage()) {
+           this.loadData()
+         }
+       },
+
+        
 /////// ex
 
 在需要缓存的页面通过 

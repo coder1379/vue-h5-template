@@ -18,6 +18,9 @@ Vue.prototype.$title = title
 // 缓存页面及页面滚动条 封装 start
 Vue.prototype.scrollPositionList = {} // 全局路由滚动条位置保存
 
+// 缓存页面是否刷新全局变量 封装 start
+Vue.prototype.refreshPositionList = {}
+
 /**
  * @param path 指定路径 如果为null 则自动获取
  * @param positionY 指定位置 如果为null 则自动获取
@@ -51,6 +54,25 @@ Vue.prototype.gotoScrollPosition = function(positionY = null) {
   document.body.scrollTop = scrollY // document.body.scrollTop 兼容苹果滚动
 }
 // 缓存页面及页面滚动条 封装 end
+
+// 设置缓存页面进入后刷新 默认是设置为不刷新，false
+Vue.prototype.setRefreshStaticPage = function(path = null, refresh = false) {
+  // 设置指定页面下次进入是否刷新
+  let routePath = path
+  if (path == null) {
+    routePath = this.$route.path // 不传参数默认为vue当前路由地址
+  }
+  this.refreshPositionList[routePath] = refresh
+}
+
+// 获取页面进入后是否刷新的值
+Vue.prototype.getRefreshStaticPage = function(path = null) {
+  let routePath = path
+  if (path == null) {
+    routePath = this.$route.path // 不传参数默认为vue当前路由地址
+  }
+  return this.refreshPositionList[routePath]
+}
 
 // 返回上一页 方便调用
 Vue.prototype.gotoBack = function() {
