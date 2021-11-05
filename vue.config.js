@@ -56,6 +56,7 @@ module.exports = {
     //   '/api': {
     //       target: "https://test.xxx.com",
     //       // ws:true,
+    //       // secure:true, // https接口无效尝试打开后测试
     //       changOrigin:true,
     //       pathRewrite:{
     //           '^/api':'/'
