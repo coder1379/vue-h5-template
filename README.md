@@ -63,6 +63,9 @@ index.html加入
 
 
 
+----------跨域问题在本地开启 proxy
+注意将 config/env.development.js  中 baseApi: '/api' 设置为api api对应proxy配置的api 
+
 ```
 
 
