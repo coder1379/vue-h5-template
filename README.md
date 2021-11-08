@@ -33,6 +33,13 @@ Nginx 配置
 nginx 加入不缓存index.html 防止不刷新无法加载最新 需配合下方index.html修改
 location = /index.html {
     add_header Cache-Control "no-cache, no-store";
+    root /root/server/vue/wap/; #项目路径
+          index index.html;                        
+          try_files $uri $uri/ /index.html; #匹配不到任何静态资源，跳到同一个index.html 主要是加入这句
+            # 如果try_files不生效可以尝试改为 
+            #if (!-e $request_filename){
+            #                rewrite ^/(.*) /index.html last;
+            #            }
 }
 
 
