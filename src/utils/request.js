@@ -1,8 +1,8 @@
 import axios from 'axios'
-import store from '@/store'
 import { Toast } from 'vant'
 // 根据环境不同引入不同api地址
 import { baseApi } from '@/config'
+import { getToken, gotoLogin } from './common'
 // create an axios instance
 const service = axios.create({
   baseURL: baseApi, // url = base api url + request url
@@ -21,9 +21,11 @@ service.interceptors.request.use(
       })
     }
 
-    if (store.getters.token) {
+    if (config.data) {
+      config.data.token = getToken()
       // config.headers['X-Token'] = '' // 设置token参数
     }
+
     return config
   },
   error => {
@@ -37,12 +39,10 @@ service.interceptors.response.use(
   response => {
     Toast.clear()
     const res = response.data
-    if (res.status && res.status !== 200) {
+    if (res.code && res.code !== 200) {
       // 登录超时,重新登录
-      if (res.status === 401) {
-        store.dispatch('FedLogOut').then(() => {
-          location.reload()
-        })
+      if (res.code === 401) {
+        gotoLogin(location.href)
       }
       return Promise.reject(res || 'error')
     } else {

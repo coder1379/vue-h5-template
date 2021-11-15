@@ -90,7 +90,7 @@ Vue.prototype.showException = function(err) {
   if (typeof (err) === 'string') {
     this.$toast(err)
   } else {
-    this.$toast(err.message)
+    this.$toast(err.msg)
   }
 }
 
