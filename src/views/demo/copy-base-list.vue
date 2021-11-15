@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { callApiByUrl } from '@/api/home.js'
+import { callApiByUrl } from '@/api/base.js'
 export default {
   data() {
     return {
