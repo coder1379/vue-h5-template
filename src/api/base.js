@@ -10,8 +10,6 @@ import { Toast } from 'vant'
 
 // api接口 用户权限处理层 判断是否由于权限访问
 export function apiCallProcess(url, requestObj, option = {}) {
-  console.log(10)
-
   return requestHandle(url, requestObj, option).then((resData) => {
     if (resData && resData.code > 0) {
       // 返回接口调用成功
@@ -22,8 +20,11 @@ export function apiCallProcess(url, requestObj, option = {}) {
         gotoLogin(location.href)
         return Promise.reject(resData)
       } else if (resData.code === 422) {
-        // 获取游客
-        console.log(422)
+        // 去登录
+        gotoLogin(location.href)
+        return Promise.reject(resData)
+        /*
+        // 获取游客 当登录用户权限验证失败后可以用游客重试 仅在某些特殊业务下有这种需求，一般为屏蔽,同401相同逻辑
         return getAccessLoadInfo().then((resData422) => {
           console.log(422 + 'success')
           if (resData422.code === 200) {
@@ -47,9 +48,12 @@ export function apiCallProcess(url, requestObj, option = {}) {
             // 失败
             return Promise.reject(resData422)
           }
-        })
+        })*/
       } else if (resData.code === 402) {
-        // 续签
+        // 去登录
+        gotoLogin(location.href)
+        return Promise.reject(resData)
+        /* // 续签 仅在 jwt过期时间很短的情况下使用 全局过期校验无法满足 则在请求中自动加入续签及重试，一般都按401走
         return getUserRenewal().then((resData402) => {
           if (resData402.code === 200) {
             if (resData402.data.same != 1) {
@@ -74,7 +78,7 @@ export function apiCallProcess(url, requestObj, option = {}) {
             // 拒绝
             return Promise.reject(resData)
           }
-        })
+        })*/
       } else {
         // 拒绝
         return Promise.reject(resData)

@@ -3,6 +3,18 @@ import { baseUrl } from '@/config'
 // 项目缓存前缀 防止重名
 export const productCachePrefix = 'vht-'
 
+// 是否开启游客模式
+export const visitorMode = true // 游客模式
+
+// 游客的类型
+export const visitorUserType = -1 // 游客的用户类型
+
+// 游客的过期刷新间隔时间
+export const visitorExOutTime = 172800 // 游客主动续签阈值
+
+// 非游客可访问路径
+export const noVistorCanAccessPathArr = ['/404', '/null', '/login', '/t']
+
 // 设置本地缓存 自动加入项目前缀 写本地缓存只使用此方式
 export function setLocalCache(name, val) {
   return localStorage.setItem(productCachePrefix + name, val)
@@ -56,6 +68,7 @@ export function clearUserLoginInfo() {
   deleteLocalCache('token') // 清除token
   deleteLocalCache('userId')
   deleteLocalCache('userType')
+  deleteLocalCache('tokenOutTime')
   return true
 }
 
@@ -69,6 +82,7 @@ export function setUserLoginInfo(dataObj) {
     setToken(dataObj.data.token)
     setUserId(dataObj.data.id)
     setUserType(dataObj.data.user_type)
+    setLocalCache('tokenOutTime', getTimeStamp() + parseInt(dataObj.data.ex_sp)) // 本地的token过期时间
   }
   return true
 }
@@ -123,6 +137,59 @@ export function isNull(parm) {
     return true
   } else {
     return false
+  }
+}
+
+// 是否为微信内
+export function isWeiXin() {
+  const ua = window.navigator.userAgent.toLowerCase()
+  if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+    return true
+  } else {
+    return false
+  }
+}
+
+// 微信登录
+export function gotoWeiXinLogin() {
+
+}
+
+// 是否需要进行游客权限验证
+export function needCheckVisitorAuth(path) {
+  // 游客模式开启并不在排除游客可访问中
+  if (visitorMode && !noVistorCanAccessPathArr.includes(path)) {
+    return true
+  } else {
+    return false
+  }
+}
+
+// 获取当前时间戳
+export function getTimeStamp() {
+  let timeVal = Date.parse(new Date()).toString() // 获取到毫秒的时间戳，精确到毫秒
+  timeVal = timeVal.substr(0, 10) // 精确到秒
+  return parseInt(timeVal)
+}
+
+// 检查token是否还在有效期内
+export function isValidityTokenTime() {
+  const currentToken = getToken()
+  if (empty(currentToken)) {
+    return false
+  }
+  let currentExTokenTIme = getLocalCache('tokenOutTime')
+
+  if (empty(currentExTokenTIme)) {
+    return false
+  } else {
+    currentExTokenTIme = parseInt(currentExTokenTIme)
+    if ((getTimeStamp() + visitorExOutTime) < currentExTokenTIme) {
+      console.log('有效token')
+      return true
+    } else {
+      return 402
+    }
   }
 }
 

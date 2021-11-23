@@ -87,22 +87,89 @@ Vue.prototype.gotoPath = function(path) {
 
 // 全局统一异常处理，个性化自行在指定页面重写
 Vue.prototype.showException = function(err) {
+  console.log(err)
   if (typeof (err) === 'string') {
     this.$toast(err)
-  } else {
+  } else if (err.msg) {
     this.$toast(err.msg)
+  } else {
+    this.$toast(err.message)
   }
 }
 
 // 全局路由前置守卫
 router.beforeEach((to, from, next) => {
+  console.log(1)
+
+  // 需要全局基本权限验证时使用,例如权限，游客，微信登录等 根据需求调整
+
+  if (isWeiXin()) {
+    // 微信内 自行扩展微信内是否登录业务
+  }
+
+  // 如需用户权限校验自行扩展权限校验业务
+  // 例如
+
+  // 设置页面跳转前的缓存参数
   if (from.meta.keepAlive === true) {
     console.log('被缓存路由:' + from.path)
     if (from.meta.excludeScroll !== true) {
       vue.setScrollPosition() // 如果为需要缓存页面则设置当前滚动条位置 如果由于html结构问题改为页面中beforeRouteLeave自行处理
     }
   }
-  next()
+
+  // 游客权限相关检查区域
+  if (needCheckVisitorAuth(to.path)) {
+    // 需要进行游客权限检查
+    const isValidityTokenTimeVal = isValidityTokenTime()
+    if (isValidityTokenTimeVal === true) {
+      next()
+    } else if (isValidityTokenTimeVal === 402) {
+      // 续签
+      getUserRenewal().then((res) => {
+        console.log('续签')
+        console.log(res)
+        if (res.code === 200) {
+          if (res.data.same == 1) {
+            setLocalCache('tokenOutTime', getTimeStamp() + parseInt(res.data.ex_sp))
+          } else {
+            setUserLoginInfo(res)
+          }
+          next()
+        } else {
+          vue.showException('服务器连接异常，请重试')
+        }
+      }).catch((err) => {
+        vue.showException(err)
+      })
+    } else {
+      // 无效重新获取游客token
+      getAccessLoadInfo().then((res) => {
+        console.log('游客')
+        console.log(res)
+        if (res.code === 200) {
+          setUserLoginInfo(res)
+          console.log(4)
+          next()
+        } else {
+          vue.showException('服务器连接异常，请重试')
+        }
+      }).catch((err) => {
+        vue.showException(err)
+      })
+    }
+  } else {
+    next()
+  }
+
+  /* // 无权限验证时直接简单使用
+  if (from.meta.keepAlive === true) {
+    console.log('被缓存路由:' + from.path)
+    if (from.meta.excludeScroll !== true) {
+      vue.setScrollPosition() // 如果为需要缓存页面则设置当前滚动条位置 如果由于html结构问题改为页面中beforeRouteLeave自行处理
+    }
+  }
+  next()*/
 })
 
 // 路由后置守卫 目前主要用于动态设置标题
@@ -126,6 +193,14 @@ import 'lib-flexible/flexible.js'
 
 // filters
 import './filters/index'
+import {
+  isValidityTokenTime,
+  isWeiXin,
+  needCheckVisitorAuth,
+  setUserLoginInfo,
+  setLocalCache, getTimeStamp
+} from './utils/common'
+import { getAccessLoadInfo, getUserRenewal } from './api/base'
 Vue.config.productionTip = false
 
 // vue 变量在全局路由守卫中会进行使用

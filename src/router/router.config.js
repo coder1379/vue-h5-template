@@ -83,10 +83,21 @@ export const constantRouterMap = [
     meta: { title: '登录', keepAlive: false }
   },
   {
-    // 404必须保持此文件在最后
-    path: '*',
+    // 404 路由不匹配时重定向页面
+    path: '/404',
     name: '404',
     component: () => import('@/views/home/404'),
     meta: { title: '404', keepAlive: false }
+  },
+  {
+    // 最后的权限匹配，如果没有符合条件的页面将重定向到404
+    path: '*',
+    name: 'noPath',
+    redirect: to => {
+      console.log('页面没有找到发生重定向:')
+      console.log(to)
+      return { path: '/404' }
+    },
+    hidden: true
   }
 ]
