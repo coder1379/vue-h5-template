@@ -24,28 +24,28 @@ export const constantRouterMap = [
         path: '/dev-demo',
         name: 'DevDemo',
         component: () => import('@/views/demo/index'),
-        meta: { title: 'Demo', keepAlive: true }
+        meta: { title: 'Demo', keepAlive: true, visitorCheck: true }
       },
       {
         // demo-list 页面 用于开发快速复制和组件使用查看
         path: '/dev-demo/copy-base-list',
         name: 'DevDemoList',
         component: () => import('@/views/demo/copy-base-list'),
-        meta: { title: 'DemoList', keepAlive: true }
+        meta: { title: 'DemoList', keepAlive: true, visitorCheck: true }
       },
       {
         // demo-page 全屏活动页
         path: '/dev-demo/all-page-test',
         name: 'All-page-test',
         component: () => import('@/views/demo/all-page-test'),
-        meta: { title: 'all-page-test', keepAlive: false }
+        meta: { title: 'all-page-test', visitorCheck: true }
       },
       {
         path: '/my',
         name: 'My',
         component: (resolve) => require(['@/views/my/index'], resolve), // 懒加载页面示例
         // component: () => import('@/views/my/index'),
-        meta: { title: '我的', keepAlive: false }
+        meta: { title: '我的', visitorCheck: true }
       }
     ]
   },
@@ -64,7 +64,7 @@ export const constantRouterMap = [
         path: '/my/set',
         name: 'MySet',
         component: () => import('@/views/my/set'),
-        meta: { title: '设置', keepAlive: true }
+        meta: { title: '设置', keepAlive: true, loginCheck: true }
       }
     ]
   },
@@ -73,21 +73,21 @@ export const constantRouterMap = [
     path: '/home/about',
     name: 'About',
     component: () => import('@/views/home/about'),
-    meta: { title: '关于我们', keepAlive: false }
+    meta: { title: '关于我们', visitorCheck: true }
   },
   {
     // 登录
     path: '/login',
     name: 'Login',
     component: () => import('@/views/home/login'),
-    meta: { title: '登录', keepAlive: false }
+    meta: { title: '登录', visitorCheck: true }
   },
   {
     // 404 路由不匹配时重定向页面
     path: '/404',
     name: '404',
     component: () => import('@/views/home/404'),
-    meta: { title: '404', keepAlive: false }
+    meta: { title: '404' }
   },
   {
     // 最后的权限匹配，如果没有符合条件的页面将重定向到404
@@ -98,6 +98,7 @@ export const constantRouterMap = [
       console.log(to)
       return { path: '/404' }
     },
+    meta: { title: '' },
     hidden: true
   }
 ]

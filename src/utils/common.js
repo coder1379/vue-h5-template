@@ -3,17 +3,16 @@ import { baseUrl } from '@/config'
 // 项目缓存前缀 防止重名
 export const productCachePrefix = 'vht-'
 
+export const serviceErrorMessage = '服务器连接异常，请尝试关闭后重新打开'
+
 // 是否开启游客模式
-export const visitorMode = true // 游客模式
+export const visitorMode = true // 游客模式 高于meta里的 是否验证游客字段
 
 // 游客的类型
 export const visitorUserType = -1 // 游客的用户类型
 
 // 游客的过期刷新间隔时间
 export const visitorExOutTime = 172800 // 游客主动续签阈值
-
-// 非游客可访问路径
-export const noVistorCanAccessPathArr = ['/404', '/null', '/login', '/t']
 
 // 设置本地缓存 自动加入项目前缀 写本地缓存只使用此方式
 export function setLocalCache(name, val) {
@@ -47,7 +46,13 @@ export function setUserType(val) {
 
 // 获取用户类型
 export function getUserType() {
-  return getLocalCache('userType')
+  const userTypeTemp = getLocalCache('userType')
+  if (userTypeTemp) {
+    // 转换类型
+    return parseInt(userTypeTemp)
+  } else {
+    return null
+  }
 }
 
 // 设置项目userId
@@ -105,23 +110,6 @@ export function gotoLogin(backPath) {
   return true
 }
 
-/**
- * 检查登录状态
- * @param toLogin 1 = 未登录直接登录
- * @param backPath
- */
-export function checkLogin(toLogin, backPath) {
-  const token = getToken()
-  if (empty(token)) {
-    if (toLogin === 1) {
-      gotoLogin(backPath)
-    }
-    return false
-  } else {
-    return true
-  }
-}
-
 // 判断是否为空 包含对象数组 类似php empty
 export function empty(parm) {
   if (parm == null || parm == undefined || parm == 0 || parm == '' || parm == 'undefined' || parm == ' ' || parm == 'null' || /^[ ]+$/.test(parm) || JSON.stringify(parm) === '{}' || JSON.stringify(parm) === '[]') {
@@ -155,16 +143,6 @@ export function gotoWeiXinLogin() {
 
 }
 
-// 是否需要进行游客权限验证
-export function needCheckVisitorAuth(path) {
-  // 游客模式开启并不在排除游客可访问中
-  if (visitorMode && !noVistorCanAccessPathArr.includes(path)) {
-    return true
-  } else {
-    return false
-  }
-}
-
 // 获取当前时间戳
 export function getTimeStamp() {
   let timeVal = Date.parse(new Date()).toString() // 获取到毫秒的时间戳，精确到毫秒
@@ -178,6 +156,13 @@ export function isValidityTokenTime() {
   if (empty(currentToken)) {
     return false
   }
+
+  if (getUserType() == null || getUserId() == null) {
+    // 用户id 或类型缺失 直接清空 返回无token
+    clearUserLoginInfo()
+    return false
+  }
+
   let currentExTokenTIme = getLocalCache('tokenOutTime')
 
   if (empty(currentExTokenTIme)) {
@@ -188,6 +173,7 @@ export function isValidityTokenTime() {
       console.log('有效token')
       return true
     } else {
+      console.log('token过期，需要续签')
       return 402
     }
   }

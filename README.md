@@ -1,5 +1,11 @@
 # vue-h5-template Vue+Vant 
 
+#使用流程
+1.复制项目
+2.安装依赖 npm install or yarn install
+3.修改vue.config.js,src/config/env.*.js(环境配置文件)
+4.npm run serve
+
 启动项目
 ----------------------------------------------
 `package.json` 里的 `scripts` 配置 `serve` `stage` `build`，通过 `--mode xxx` 来执行不同环境
@@ -8,7 +14,13 @@
 - 通过 `npm run stage` 打包测试 , 执行 `staging` 需要测试环境配置nginx重写404到index，避免vue页面刷新404
 - 通过 `npm run build` 打包正式 , 执行 `production` 需要环境配置nginx重写404到index，避免vue页面刷新404
 
-
+router.config.js 参数解释
+-------------------------------------------------
+meta 内参数：keepAlive 是否缓存页面（配合）
+            excludeScroll 是否排除滚动（特定情况下配合keepAlive使用）
+            visitorCheck 是否进行游客验证 正常情况下 visitorCheck和loginCheck只有一个需要检查，也只能设置1个为true
+            loginCheck 是否进行登录验证 后端接口也会校验权限，并返回对应值，前端先行校验一次，如业务较为复杂可考虑直接放弃全都校验全由后端处理。
+           
 
 
 二级目录模式需调整地方

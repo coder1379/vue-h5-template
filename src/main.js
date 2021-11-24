@@ -99,70 +99,143 @@ Vue.prototype.showException = function(err) {
 
 // 全局路由前置守卫
 router.beforeEach((to, from, next) => {
-  console.log(1)
+  console.log('vue beforeEach')
+  /* if (isWeiXin()) {
+    // 全局微信内处理可自行扩展，如微信内是否登录业务,单独微信处理建议在指定页面判断并处理
+  }*/
 
-  // 需要全局基本权限验证时使用,例如权限，游客，微信登录等 根据需求调整
-
-  if (isWeiXin()) {
-    // 微信内 自行扩展微信内是否登录业务
-  }
-
-  // 如需用户权限校验自行扩展权限校验业务
-  // 例如
-
-  // 设置页面跳转前的缓存参数
-  if (from.meta.keepAlive === true) {
+  // 设置页面跳转前的缓存参数 仅当已经初始化vue后生效
+  if (vue && from.meta.keepAlive === true) {
     console.log('被缓存路由:' + from.path)
     if (from.meta.excludeScroll !== true) {
       vue.setScrollPosition() // 如果为需要缓存页面则设置当前滚动条位置 如果由于html结构问题改为页面中beforeRouteLeave自行处理
     }
   }
 
-  // 游客权限相关检查区域
-  if (needCheckVisitorAuth(to.path)) {
-    // 需要进行游客权限检查
-    const isValidityTokenTimeVal = isValidityTokenTime()
-    if (isValidityTokenTimeVal === true) {
+  // [-----------------------------------------常用方式1
+  /*
+  * 菜单权限类全局统一处理 例如 检查是否具有某些菜单权限 可自行扩展 先获取后端权限 在检查是否路由在菜单中, 一般这类检查可以直接屏蔽掉登录和游客区域，直接进行菜单权限判断即可
+  */
+  // 权限菜单类检查代码自行扩展
+  // -------------]
+
+  // [----------------------------------------- 常用方式2 默认使用的方式
+  // 复杂权限处理 start 需要全局基本权限验证时使用,例如权限，游客，微信登录等 根据需求调整
+
+  // 直接全局检查token有效期降低业务复杂度
+  const currentUserType = getUserType() // 当前用户类型
+  const isValidityTokenTimeVal = isValidityTokenTime()
+  if (isValidityTokenTimeVal === true) {
+    if (to.meta.loginCheck === true && currentUserType === visitorUserType) {
+      // 有效 & 需要登录检查 & 身份游客 = 去登录
+      gotoLogin(location.href)
+      return
+    } else {
+      if (currentUserType === visitorUserType && visitorMode === false) {
+        // 如果当前为游客 且已经关闭了游客模式 则清理游客用户信息 主要发生在模式切换时
+        clearUserLoginInfo()
+      }
       next()
-    } else if (isValidityTokenTimeVal === 402) {
-      // 续签
+    }
+  } else if (isValidityTokenTimeVal === 402) {
+    // 有token且返回token过期需要续签
+    if (visitorMode === false && to.meta.loginCheck !== true) {
+      if (currentUserType === visitorUserType) {
+        clearUserLoginInfo() // 过期的游客token 清理向下，非游客token保留让用户可以续签
+      }
+      next()
+    } else if (to.meta.loginCheck === true && currentUserType === visitorUserType) {
+      // 需要登录检查 & 身份游客 = 直接去登录 不进行续签
+      gotoLogin(location.href)
+      return
+    } else {
+      // 其他类型进行续签
       getUserRenewal().then((res) => {
-        console.log('续签')
-        console.log(res)
         if (res.code === 200) {
+          console.log('用户续签成功')
           if (res.data.same == 1) {
             setLocalCache('tokenOutTime', getTimeStamp() + parseInt(res.data.ex_sp))
           } else {
             setUserLoginInfo(res)
           }
-          next()
+          next() // 续签成功继续向下
+        } else if (res.code === 401) {
+          if (to.meta.visitorCheck === true && visitorMode === true) {
+            // 登录用户过期 并访问的是游客校验页面 且开启游客验证 无论身份时什么都获取游客token向下继续执行
+            getAccessLoadInfo().then((resGet) => {
+              if (resGet.code === 200) {
+                console.log('获取游客')
+                console.log(resGet)
+                setUserLoginInfo(resGet)
+                next()
+              } else {
+                console.log('获取token返回数据错误:')
+                console.log(resGet)
+                alert(serviceErrorMessage + ' 异常码：' + resGet.code)
+                return
+              }
+            }).catch((errGet) => {
+              console.log('获取token异常:')
+              console.log(errGet)
+              alert(serviceErrorMessage)
+              return
+            })
+          } else if (to.meta.loginCheck === true) {
+            // 需要登录校验直接跳转到登录页
+            gotoLogin(location.href)
+            return
+          } else {
+            // 不需要验证任何内容 清空401无效数据 并继续向下
+            clearUserLoginInfo()
+            next()
+          }
         } else {
-          vue.showException('服务器连接异常，请重试')
+          console.log('用户续签返回数据错误:')
+          console.log(res)
+          alert(serviceErrorMessage + ' 异常码：' + res.code)
+          return
         }
       }).catch((err) => {
-        vue.showException(err)
-      })
-    } else {
-      // 无效重新获取游客token
-      getAccessLoadInfo().then((res) => {
-        console.log('游客')
-        console.log(res)
-        if (res.code === 200) {
-          setUserLoginInfo(res)
-          console.log(4)
-          next()
-        } else {
-          vue.showException('服务器连接异常，请重试')
-        }
-      }).catch((err) => {
-        vue.showException(err)
+        console.log('用户续签异常:')
+        console.log(err)
+        alert(serviceErrorMessage)
+        return
       })
     }
   } else {
-    next()
+    if (to.meta.loginCheck === true) {
+      // 页面需要登录 直接去登录
+      gotoLogin(location.href)
+      return
+    } else if (to.meta.visitorCheck === true && visitorMode === true) {
+      getAccessLoadInfo().then((res) => {
+        if (res.code === 200) {
+          console.log('获取游客')
+          console.log(res)
+          setUserLoginInfo(res)
+          next()
+        } else if (res.code === 401) {
+          gotoLogin(location.href)
+          return
+        } else {
+          console.log('获取token返回数据错误:')
+          console.log(res)
+          alert(serviceErrorMessage + ' 异常码：' + res.code)
+        }
+      }).catch((err) => {
+        console.log('获取token异常:')
+        console.log(err)
+        alert(serviceErrorMessage)
+      })
+    } else {
+      next()
+    }
   }
+  // 复杂权限处理 end
+  // -------------]
 
-  /* // 无权限验证时直接简单使用
+  // [----------------------------------------- 常用方式3
+  /* // 无权限验证时直接简单使用 屏蔽复杂权限处理后打开
   if (from.meta.keepAlive === true) {
     console.log('被缓存路由:' + from.path)
     if (from.meta.excludeScroll !== true) {
@@ -170,13 +243,15 @@ router.beforeEach((to, from, next) => {
     }
   }
   next()*/
+  // -------------]
 })
 
 // 路由后置守卫 目前主要用于动态设置标题
 router.afterEach((to, from) => {
   if (to.meta.title) {
     // 动态设置标题
-    document.title = to.meta.title + '-' + vue.$title
+    // document.title = to.meta.title + '-' + vue.$title
+    document.title = to.meta.title
   }
 })
 
@@ -196,9 +271,15 @@ import './filters/index'
 import {
   isValidityTokenTime,
   isWeiXin,
-  needCheckVisitorAuth,
   setUserLoginInfo,
-  setLocalCache, getTimeStamp
+  setLocalCache,
+  getTimeStamp,
+  gotoLogin,
+  serviceErrorMessage,
+  getUserType,
+  visitorUserType,
+  visitorMode,
+  clearUserLoginInfo
 } from './utils/common'
 import { getAccessLoadInfo, getUserRenewal } from './api/base'
 Vue.config.productionTip = false
