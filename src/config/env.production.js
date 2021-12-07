@@ -5,5 +5,6 @@ module.exports = {
   baseApi: 'https://www.xxxpro.com/api', // 正式api请求地址 注意结尾无/
   APPID: 'xxx',
   APPSECRET: 'xxx',
+  WXAPPID: '123123', // 微信appid
   $cdn: 'https://cn.vuejs.org' // 注意结尾无/
 }

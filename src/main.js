@@ -99,6 +99,18 @@ Vue.prototype.showException = function(err) {
 
 // 全局路由前置守卫
 router.beforeEach((to, from, next) => {
+  // 百度统计 统一调用时 非统一调用根据页面写入统计
+  /*  try {
+      if (to.path) {
+        if (window._hmt) {
+          window._hmt.push(['_trackPageview', to.fullPath])
+        }
+      }
+    } catch (e) {
+      console.log('百度统计异常:')
+      console.log(e)
+    }*/
+
   console.log('vue beforeEach')
   /* if (isWeiXin()) {
     // 全局微信内处理可自行扩展，如微信内是否登录业务,单独微信处理建议在指定页面判断并处理
@@ -270,7 +282,6 @@ import 'lib-flexible/flexible.js'
 import './filters/index'
 import {
   isValidityTokenTime,
-  isWeiXin,
   setUserLoginInfo,
   setLocalCache,
   getTimeStamp,

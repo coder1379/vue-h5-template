@@ -3,8 +3,9 @@
 #使用流程
 1.复制项目
 2.安装依赖 npm install or yarn install
-3.修改vue.config.js,src/config/env.*.js(环境配置文件)
+3.修改vue.config.js,src/config/env.*.js(环境配置文件),调整需要页面，如百度统计[public/index.html,actionInitEndBack()]
 4.npm run serve
+
 
 启动项目
 ----------------------------------------------
@@ -1424,6 +1425,8 @@ Vscode setting.json 设置
 }
 
 ```
+
+##IOS 微信分享问题处理方案关键字：assign
 
 [▲ 回顶部](#top)
 

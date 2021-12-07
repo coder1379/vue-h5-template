@@ -2,8 +2,8 @@ import axios from 'axios'
 import Qs from 'qs'
 
 /**
-* 请求底层封装层 不区分接口参数等，不满足需求情况下可修改阔复制创建新文件
-*/
+ * 请求底层封装层 不区分接口参数等，不满足需求情况下可修改阔复制创建新文件
+ */
 
 // create an axios instance
 const service = axios.create({
@@ -22,7 +22,11 @@ service.interceptors.request.use(
       // 包含文件兼容二进制格式
       const formData = new FormData()
       Object.keys(config.data).forEach((key) => {
-        formData.append(key, config.data[key])
+        if (key == 'file_data') {
+          formData.append(key, config.data[key], config.data[key].name)
+        } else {
+          formData.append(key, config.data[key])
+        }
       })
       config.data = formData
       config.headers['Content-Type'] = 'multipart/form-data'

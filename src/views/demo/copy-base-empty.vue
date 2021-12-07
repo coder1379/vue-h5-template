@@ -17,7 +17,12 @@
 </template>
 
 <script>
+import assign from '../../utils/assign' // ios微信分享问题处理方案
+import { defalutWxShareBar, setWxBarButton } from '../../utils/wxCommon'
+import { actionInitEndBack, checkToWxLogin } from '../../utils/common' // ios微信分享页面不刷新处理方案,不需要删除即可
+
 export default {
+  mixins: [assign], // ios微信分享页面不刷新处理方案,不需要删除即可
   data() {
     return {
 
@@ -26,6 +31,9 @@ export default {
   computed: {
   },
   mounted() {
+    checkToWxLogin(this.$route.fullPath) // 检查微信并跳转
+    actionInitEndBack(this.$route.fullPath) // 加入到百度统计
+    setWxBarButton('测试微信分享', '测试微信分享', location.href, '', defalutWxShareBar) // 设置微信按钮
   },
   activated() {
     // 需要缓存的页面手动加入滚动条处理 不缓存可删除 activated

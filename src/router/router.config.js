@@ -34,6 +34,13 @@ export const constantRouterMap = [
         meta: { title: 'DemoList', keepAlive: true, visitorCheck: true }
       },
       {
+        // 图片上传 demo页面
+        path: '/upload-image',
+        name: 'UploadImage',
+        component: () => import('@/views/demo/upload-image'),
+        meta: { title: '上传图片', visitorCheck: true }
+      },
+      {
         // demo-page 全屏活动页
         path: '/dev-demo/all-page-test',
         name: 'All-page-test',
@@ -81,6 +88,13 @@ export const constantRouterMap = [
     name: 'Login',
     component: () => import('@/views/home/login'),
     meta: { title: '登录', visitorCheck: true }
+  },
+  {
+    // login
+    path: '/wxlogin',
+    name: 'Wxlogin',
+    component: () => import('@/views/home/wxlogin'),
+    meta: { title: '' }
   },
   {
     // 404 路由不匹配时重定向页面

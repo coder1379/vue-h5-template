@@ -1,7 +1,7 @@
 import api from './index'
 import { baseApi } from '@/config'
 import request from '../utils/request'
-import { getToken, gotoLogin, setUserLoginInfo } from '../utils/common'
+import { empty, getLocalCache, getToken, getUuid, gotoLogin, setLocalCache, setUserLoginInfo } from '../utils/common'
 import { Toast } from 'vant'
 
 /**
@@ -91,6 +91,7 @@ export function apiCallProcess(url, requestObj, option = {}) {
 
 // 获取游客加载信息
 export function getAccessLoadInfo() {
+  console.log('getAccessLoadInfo a')
   const dataObj = {
     baseURL: baseApi,
     url: '/account/visitortoken',
@@ -113,8 +114,6 @@ export function getUserRenewal() {
  * @param option 其他参数 timeout,loading=是否弹出加载,method,contentType
  */
 export function requestHandle(url, requestObj, option = {}) {
-  console.log(34)
-
   const timeout = option.timeout ?? null // 如果有超时时间覆盖超时时间
   const loading = option.loading ?? false // 显示加载弹窗 默认不显示
   const methodStr = option.method ?? 'POST'
@@ -129,6 +128,8 @@ export function requestHandle(url, requestObj, option = {}) {
   }
 
   requestObj.token = getToken()
+  // 添加当前页面链接
+  requestObj.cur_path_nsr_ = location.href
 
   const dataObj = {
     baseURL: baseApi,
@@ -147,7 +148,12 @@ export function requestHandle(url, requestObj, option = {}) {
 
 // 获取设备信息
 export function getDeviceInfo() {
-  return { device_type: 1, device_code: '123123', system: 'ios', model: 'ipod' }
+  let localDeviceCode = getLocalCache('device_code')
+  if (empty(localDeviceCode)) {
+    localDeviceCode = getUuid()
+    setLocalCache('device_code', localDeviceCode)
+  }
+  return { device_type: 4, device_code: localDeviceCode }
 }
 
 /**
@@ -170,9 +176,13 @@ export function getUserDetail(data) {
   return apiCallProcess(api.userDetail, data)
 }
 
-// 获取page参数
-export function getPageDetail(data) {
-  console.log(70)
-  return apiCallProcess(api.pageDetail, data)
+// 图片上传
+export function uploadImg(data, option = {}) {
+  return apiCallProcess(api.uploadImg, data, option)
+}
+
+// 获取微信分享参数
+export function getWxShareConfigApi(data) {
+  return apiCallProcess(api.wxShareConfig, data)
 }
 

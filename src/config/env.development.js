@@ -5,5 +5,6 @@ module.exports = {
   baseApi: 'http://49.233.81.215', // 本地api请求地址,注意：如果你使用了代理，请设置成'/'  注意结尾无/
   APPID: 'xxx',
   APPSECRET: 'xxx',
+  WXAPPID: '123123', // 微信appid
   $cdn: 'https://cn.vuejs.org' // cdn 模式使用地址 注意结尾无/
 }

@@ -1,4 +1,4 @@
-import { baseUrl } from '@/config'
+import { baseUrl, WXAPPID, baseApi } from '@/config'
 
 // 项目缓存前缀 防止重名
 export const productCachePrefix = 'vht-'
@@ -177,5 +177,46 @@ export function isValidityTokenTime() {
       return 402
     }
   }
+}
+
+// 检查是否跳转微信登录
+export function checkToWxLogin(reBackPath = '') {
+  if (isWeiXin() && getUserType() == visitorUserType) {
+    // 微信内切当前为游客获取微信登录
+    setLocalCache('wx-back-path', reBackPath)
+
+    let serverUrl = baseApi + '/account/wxweblogin'
+    if (process.env.VUE_APP_ENV == 'development') {
+      serverUrl = 'http://local.abc.com/account/wxweblogin'
+    }
+    location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + WXAPPID + '&redirect_uri=' + serverUrl + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
+    return
+  }
+}
+
+export function actionInitEndBack(path) {
+  // 默认关闭百度统计
+  return false
+
+  // 百度统计
+  try {
+    if (window._hmt) {
+      window._hmt.push(['_trackPageview', path])
+    }
+  } catch (e) {
+    console.log('百度统计异常:')
+    console.log(e)
+  }
+}
+
+/**
+ * 获取uuid
+ * @returns {string}
+ */
+export function getUuid() {
+  function S4() {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
+  }
+  return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4())
 }
 
