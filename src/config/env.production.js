@@ -1,8 +1,8 @@
 // 正式
 module.exports = {
   title: '(生产)vue-h5-template',
-  baseUrl: 'https://www.xxxpro.com/', // 正式项目地址 注意结尾无/
-  baseApi: 'https://www.xxxpro.com/api', // 正式api请求地址 注意结尾无/
+  baseUrl: 'http://www.vueh5template.com/', // 正式项目地址 注意结尾无/
+  baseApi: 'http://api.vueh5template.com/api', // 正式api请求地址 注意结尾无/
   APPID: 'xxx',
   APPSECRET: 'xxx',
   WXAPPID: '123123', // 微信appid

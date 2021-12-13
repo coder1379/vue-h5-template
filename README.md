@@ -7,6 +7,31 @@
 4.npm run serve
 
 
+#aliyun，docker测试环境
+```
+构建脚本
+# input your command here
+yarn install
+npm run build
+
+部署脚本
+#! /bin/bash
+dirName=$(date "+%Y-%m-%d_%H-%M-%S")
+fileDev="/home/publish/vueh5template/unzip/${dirName}"
+mkdir -p ${fileDev}
+tar zxvf /home/publish/vueh5template/package.tgz -C $fileDev
+\cp -rf ${fileDev}/* /home/publish/vueh5template/runcode
+
+ECS
+mkdir /home/publish/vueh5template/nginx_conf,/home/publish/vueh5template/runcode,/home/publish/vueh5template/unzip
+vim deault.conf 同项目dockerconfig default.conf
+
+host api.vueh5template.com 到指定ip 
+
+docker run -d -p 50808:80 -v /home/publish/vueh5template/runcode:/usr/share/nginx/html -v /home/publish/vueh5template/nginx_conf:/etc/nginx/conf.d/ --restart=always --name vue-h5-template nginx:latest
+
+```
+
 启动项目
 ----------------------------------------------
 `package.json` 里的 `scripts` 配置 `serve` `stage` `build`，通过 `--mode xxx` 来执行不同环境
