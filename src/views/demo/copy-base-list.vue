@@ -69,10 +69,13 @@ export default {
 
       // 主要替换接口调用及接口内 数组处理部分，其余相关参数可以不用调整
       callApiByUrl('/test/test-list', { pageNumber: this.pageNumber, pageSize: this.pageSize }).then((res) => {
-        // 数据处理
+        // 数据处理 加入到显示数组中
         if (res.data.list && res.data.list.length > 0) {
           this.list.push(...res.data.list)
-        } else {
+        }
+
+        if (!res.data.list || res.data.list.length < this.pageSize) {
+          // 如果数组不存在或者返回数量小于每页数据则表示没有下一页，尽量不采用通过total计算，可能某些接口无法返回总数
           this.finished = true
         }
 
