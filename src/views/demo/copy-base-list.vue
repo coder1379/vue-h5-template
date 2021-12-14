@@ -68,19 +68,16 @@ export default {
       this.pageNumber++
 
       // 主要替换接口调用及接口内 数组处理部分，其余相关参数可以不用调整
-      callApiByUrl('/getcurrent1p.php', { pageNumber: this.pageNumber, pageSize: this.pageSize }, 'GET').then((res) => {
+      callApiByUrl('/test/test-list', { pageNumber: this.pageNumber, pageSize: this.pageSize }).then((res) => {
         // 数据处理
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1)
+        if (res.list && res.list.length > 0) {
+          this.list.push(...res.list)
+        } else {
+          this.finished = true
         }
 
         // 设置加载完成
         this.loading = false
-
-        // 判断是否还有下一页处理
-        if (this.list.length >= 40) {
-          this.finished = true
-        }
       }).catch((err) => {
         this.showException(err)
         this.loading = false
