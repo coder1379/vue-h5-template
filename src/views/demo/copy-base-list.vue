@@ -70,8 +70,8 @@ export default {
       // 主要替换接口调用及接口内 数组处理部分，其余相关参数可以不用调整
       callApiByUrl('/test/test-list', { pageNumber: this.pageNumber, pageSize: this.pageSize }).then((res) => {
         // 数据处理
-        if (res.list && res.list.length > 0) {
-          this.list.push(...res.list)
+        if (res.data.list && res.data.list.length > 0) {
+          this.list.push(...res.data.list)
         } else {
           this.finished = true
         }
