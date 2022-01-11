@@ -270,6 +270,9 @@ router.afterEach((to, from) => {
 // 全局引入按需引入UI库 vant
 import '@/plugins/vant'
 // 引入全局样式
+
+// import 'vant/lib/index.less' // 需要先引入全局或局部后才能覆盖,当前文件夹位置决定css先后顺序 默认关闭，需要打开 需引入 less-loader@7.0.0
+
 import '@/assets/css/index.scss'
 
 // 引入 vant 全局样式覆盖文件

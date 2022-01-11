@@ -137,6 +137,28 @@ vant全局样式覆盖 src/assets/css/vant-overwrite.scss vant组件大部分都
 
 对 https://github.com/sunniejs/vue-h5-template.git 根据自身业务进行了调整
 
+
+vant模板替换：
+npm install --save less-loader@7.0.0 // 目前测试只有7.0.0版本可以成功，8.0及以上版本测试是无法编译 less 是否需要安装待测试
+main.js 添加 import 'vant/lib/index.less' // 需要先引入全局或局部后才能覆盖,当前文件夹位置决定css先后顺序
+less: { // 覆盖vant模板，需要时打开
+        // 若 less-loader 版本小于 6.0，请移除 lessOptions 这一级，直接配置选项。
+        lessOptions: {
+          modifyVars: {
+            // 直接覆盖变量
+            'text-color': '#DB7093', // 文本颜色直接覆盖
+            'border-color': '#7fff40', // 边框颜色直接覆盖
+            'white': '#5e77ff' // 白色直接覆盖
+            // 或者可以通过 less 文件覆盖（文件路径为绝对路径）
+            // hack: `true; @import "./src/assets/css/template.less";` // 通过文件覆盖主题，有多主题时比较方便
+          }
+        }
+      }
+
+modifyVars 中 或者 template.less 填写需要修改内容
+
+
+
 调整内容:
 -----------------------------------------
 默认使用history模式

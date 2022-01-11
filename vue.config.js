@@ -77,6 +77,20 @@ module.exports = {
           $cdn: "${defaultSettings.$cdn}";
           `
       }
+      /*
+      less: { // 覆盖vant模板，需要时打开
+        // 若 less-loader 版本小于 6.0，请移除 lessOptions 这一级，直接配置选项。
+        lessOptions: {
+          modifyVars: {
+            // 直接覆盖变量
+            'text-color': '#DB7093', // 文本颜色直接覆盖
+            'border-color': '#7fff40', // 边框颜色直接覆盖
+            'white': '#5e77ff' // 白色直接覆盖
+            // 或者可以通过 less 文件覆盖（文件路径为绝对路径）
+            // hack: `true; @import "./src/assets/css/template.less";` // 通过文件覆盖主题，有多主题时比较方便
+          }
+        }
+      }*/
     }
   },
   configureWebpack: config => {
