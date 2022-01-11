@@ -157,6 +157,9 @@ less: { // 覆盖vant模板，需要时打开
 
 modifyVars 中 或者 template.less 填写需要修改内容
 
+或
+
+https://github.com/Aisen60/vant-theme // 手动设置主题并下载，目前还不支持vue2
 
 
 调整内容:
