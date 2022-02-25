@@ -1,6 +1,6 @@
 <!-- page name -->
 <template>
-  <div class="active-page">
+  <div class="full-screen-page">
 
   </div>
 </template>
@@ -34,11 +34,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.active-page{
+.full-screen-page{
   background-image: url("/test_cover.jpg");
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  position:absolute;
 }
 </style>

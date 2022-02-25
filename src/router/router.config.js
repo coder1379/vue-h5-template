@@ -96,6 +96,17 @@ export const constantRouterMap = [
     component: () => import('@/views/home/wxlogin'),
     meta: { title: '' }
   },
+  // template 模板路径开始 根据需要移除 ssssssssssssssssssssss
+  {
+    // 登录页面模式 1
+    path: '/template/login/login_1',
+    name: 'TemplateLogin1',
+    component: () => import('@/views/template/login/login_1'),
+    meta: { title: '密码登录模板1' }
+  },
+  // template 模板路径结束 根据需要移除 eeeeeeeeeeeeeeeeeeeeee
+
+  //  ////添加新路径写入到此行之上
   {
     // 404 路由不匹配时重定向页面
     path: '/404',
