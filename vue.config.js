@@ -9,7 +9,7 @@ const name = defaultSettings.title || 'vue mobile template'
 // 生产环境，测试和正式
 const IS_PROD = ['production', 'prod'].includes(process.env.NODE_ENV) // node的环境 一般测试和同生产便于保障生产正确性，在业务代码中不用这个判断
 
-const IS_APP_PROD = ['production', 'prod'].includes(process.env.VUE_APP_ENV) // app 环境参数，一般业务环境判断都用这个参数,例如api接口判断等
+const IS_APP_PROD = ['production', 'prod'].includes(process.env.VUE_APP_ENV) // app 环境参数，一般业务环境判断都用这个参数,例如api接口判断,publicPath部署为二级目录时生产地oss设置等
 
 console.log(IS_APP_PROD, 'env')
 
