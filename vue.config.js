@@ -7,7 +7,12 @@ const resolve = dir => path.join(__dirname, dir)
 // page title
 const name = defaultSettings.title || 'vue mobile template'
 // 生产环境，测试和正式
-const IS_PROD = ['production', 'prod'].includes(process.env.NODE_ENV)
+const IS_PROD = ['production', 'prod'].includes(process.env.NODE_ENV) // node的环境 一般测试和同生产便于保障生产正确性，在业务代码中不用这个判断
+
+const IS_APP_PROD = ['production', 'prod'].includes(process.env.VUE_APP_ENV) // app 环境参数，一般业务环境判断都用这个参数
+
+console.log(IS_APP_PROD, 'env')
+
 // externals
 // const externals = {
 //   vue: 'Vue',

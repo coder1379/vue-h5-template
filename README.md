@@ -6,6 +6,11 @@
 3.修改vue.config.js,src/config/env.*.js(环境配置文件),调整需要页面，如百度统计[public/index.html,actionInitEndBack()]
 4.npm run serve
 
+#环境说明
+NODE_ENV = node环境的变量，例如 测试也想按照生产环境的模式更好保障生产环境的正确性可以将stage也设置为 production 目前测试环境就是production
+VUE_APP_ENV = app对应环境，例如调用的接口要是生产还是测试就根据这个参数，测试=测试，生产=生产。 注意vue.config.js 中的默认环境就是这个值，其他环境要判断也同个这个参数进行控制。
+
+
 
 #aliyun，docker测试环境
 ```
