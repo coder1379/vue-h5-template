@@ -33,7 +33,7 @@ vim deault.conf 同项目dockerconfig default.conf
 
 host api.vueh5template.com 到指定ip 
 
-docker run -d -p 50808:80 -v /home/publish/vueh5template/runcode:/usr/share/nginx/html -v /home/publish/vueh5template/nginx_conf:/etc/nginx/conf.d/ --restart=always --name vue-h5-template nginx:latest
+docker run -d -p 50808:80 -v /home/publish/vueh5template/runcode:/usr/share/nginx/html -v /home/publish/vueh5template/runcode/nginx_conf_dev_test:/etc/nginx/conf.d/ --restart=always --name vue-h5-template nginx:latest
 
 ```
 
