@@ -1,8 +1,9 @@
+
 # vue-h5-template Vue+Vant 
 
 #使用流程
 1.复制项目
-2.安装依赖 npm install or yarn install
+2.安装依赖 npm install  --registry=https://registry.npmmirror.com  or yran install
 3.修改vue.config.js,src/config/env.*.js(环境配置文件),调整需要页面，如百度统计[public/index.html,actionInitEndBack()]
 4.npm run serve
 

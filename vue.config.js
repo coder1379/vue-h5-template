@@ -107,6 +107,9 @@ module.exports = {
     //   config.externals = externals
     // }
   },
+  /*transpileDependencies: [ // 兼容ie11的编译 地方,例如有base64的代码或其他等
+   // /[/\\]node_modules[/\\](.+?)?js-base64[/\\]base64(.*)/,
+  ],*/
 
   chainWebpack: config => {
     config.plugins.delete('preload') // TODO: need test
