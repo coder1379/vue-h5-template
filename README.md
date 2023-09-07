@@ -12,6 +12,20 @@ NODE_ENV = node环境的变量，例如 测试也想按照生产环境的模式�
 VUE_APP_ENV = app对应环境，例如调用的接口要是生产还是测试就根据这个参数，测试=测试，生产=生产。 注意vue.config.js 中的默认环境就是这个值，其他环境要判断也同个这个参数进行控制。
 
 
+#decimal.js 简单使用
+import Decimal from 'decimal.js';
+
+let a = new Decimal(0.15)
+let b= new Decimal(3.25)
+
+let c = a.plus(b).toString() //加
+let minus = a.minus(b) // 减
+let times = a.times(b) // 乘
+let dividedBy = a.dividedBy(b) // 除
+console.log(minus.toString(),'minus')
+console.log(times.toString(),'times')
+console.log(dividedBy.toString(),'dividedBy')
+console.log(new Decimal(0.3295).toDecimalPlaces(2).toString())
 
 #aliyun，docker测试环境
 ```
