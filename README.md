@@ -1,6 +1,8 @@
 
 # vue-h5-template Vue+Vant 
 
+ie11 兼容配置：// "sockjs-client": "^1.5.1", // 兼容ie11 时需要升级版本的包, 有些环境下有用到,具体是否使用可以感觉具体情况 添加到package.json里面
+
 #使用流程
 1.复制项目
 2.安装依赖 npm install  --registry=https://registry.npmmirror.com  or yran install
